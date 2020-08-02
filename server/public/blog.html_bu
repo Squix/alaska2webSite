@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Alaska - Blog</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="theme.css">
+
+
+<style>
+body {
+    font-family: "Lato", sans-serif;
+}
+
+hr {
+    border: none;
+    border-top: 3px double #333;
+    color: #333;
+    overflow: visible;
+    text-align: center;
+    height: 5px;
+}
+
+.sidenav {
+    width: 10%;
+    position: fixed;
+    z-index: 1;
+    top: 10%;
+    left: 2%;
+    background: #000;
+    overflow-x: hidden;
+    padding: 2% 0;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #2070de;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #064579;
+}
+
+.main {
+    margin-left: 15%; /* Same width as the sidebar + left position in px */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+</style>
+
+	</head>
+	<body>
+		<nav class='navbar navbar-expand-lg navbar-light' id="mainNav">
+      <a class="navbar-brand" href="#top">ALASKA - Blog</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">  
+        </ul>
+        <button onClick="backHome()" class="btn btn-outline-light" type="button">
+          Go to Alaska
+        </button>
+      </div>
+    </nav>
+<div class="sidenav">
+  <a href="#TwoMonth">Second monthly review</a>
+  <hr>
+  <a href="#OneMonth">First monthly review</a>
+  <hr>
+  <a href="#Postpone">ALASKA is postponed</a>
+  <hr>
+  <a href="#MidAugust">Midsummer Update</a>
+  <hr>
+  <a href="#First">First blog entry</a>
+</div>
+
+    <div class="container" style="margin-top: 100px">
+      <h1><a id="TwoMonth"></a>Users get seriously into the ALASKA challenge</h1>
+        <p>
+	  The ALASKA challenge has been started two months and a half ago and it has been one month since the last review.<br>
+	  Over this last month, there has been an important increase in the activity and an impressive improvement in best submission's results.<br>
+	  Indeed the "UPPER BOUND" has been broken on the 24th of October by user 2016130205 with about 64% missed detection (for 5% false alarm rate). 
+	  Then, the 60% missed detection barrier has been reached very quickly by user 1185205583 before making an impression jump by improving all previous scores by 5% reaching a missed rate of 55% on the 3rd of November.<br>
+          This remained the best submission until the shattering entrance of the user yyousfi1 who slammed a submission with as low as 44% false alarm rate.<br>
+	  The current ranking shows, among other, three groups of very tight competitors (scores given in % of missed detection for 5% false alarm rate):
+	  <ul class="custom-list">
+	    <li class="custom-list-item"><div>
+		<b>yyousfi1</b>, from Binghamton University, USA, is leading by far with 43.81% ;
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		Three competitors, all from Shenzhen University, China, are struggling behind: <b>1185205583</b> hits a 55.34% tight with <b>2016130205</b> reaching 55.34% and slightly above <b>2016130231</b> with 56.59%
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		Eventually a group of four other competitors (from unknown institutions) are about 6% behind and very close to each other: <b>veyron_gz</b> with 61.56% , <b>763244161</b> with 62.19% (and only 3 submissions!) , <b>hoopabc</b> with 63.28% (only one single submission) and <b>jishenzeng</b> with 63.41% (who did not submit since 1st of November)
+	    </div></li>
+	  </ul>
+	  Interestingly, we measured the similarity of those submissions by counting how many images they have in common among the 500 firsts and 500 lasts (hence, that are labeled as the 500 most likely stego and 500 more likely covers).<br>
+	  It is striking that <b>yyousfi1</b> share only about 35% of images on this subset with its three followers. <br>
+	  On the opposite, the group from Shenzhen University has more than 80% images in common in those subsets. The group of four followers competitors is more heterogeneous with a remarkable submission from <b>jishenzeng</b> that share less than 20% of 500 most like covers and stego with the current leader (while reaching a pretty decent score). <br>
+	  
+	  
+	  Eventually, let us finish with a closing remark on the activity on the ALASKA challenge, as of date we have:
+	  <ul class="custom-list">
+	    <li class="custom-list-item"><div>
+		183 registered users (+42 in one month) ;
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		176 submissions (+105 in one month) from 32 users (50% increase as compared to the past month);
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		3700+ unique visitors (hence, roughly the same average traffic of about 35 unique visitors per day);
+	    </div></li>
+	  </ul>
+        </p>
+	<p>
+	   (written on: November, 17th, 2018)
+        </p>
+    <hr>
+    </div>
+
+
+    <div class="container" style="margin-top: 100px">
+      <h1><a id="OneMonth"></a>Results after (a bit more than) one month</h1>
+        <p>
+	  It has been a month and a week since the ALASKA challenge started and it is time for a first review of competitors' results.<br>
+          After a sort of warm-up phase during which the results were below what we stated as a "lower bound", recent submission reached impressive results, getting closer and closer to the "upper bound".<br>
+	  One can also note that Chinese competitors are leading the challenge by far with three tight submissions around 30% of missed detection for 5% false alarm rate.<br>
+	  Interestingly, looking at those three best submissions the current leader (jishenzeng) and the current third (1185205583) provided very similar results ; their first 500 images, ranked as the most likely stego, overlap by over 90%. Looking at the current second competitor (2016130205) this overlap is below 50%.<br>
+	  The challenge also seems to be quite a success up to now with ; as of the writing of the blog entry, we have:
+	  <ul class="custom-list">
+	    <li class="custom-list-item"><div>
+		141 registered users ;
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		71 submissions (hence almost one per day) from 20 different users;
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		2576 unique visitors (just above 1000 per month) from 15 different countries;
+	    </div></li>
+	  </ul>
+        </p>
+	<p>
+	   We are truly looking forward to seeing how long the "upper bound" will hold and if those recent breakthrough submissions stimulate the competition.
+        </p>
+	<p>
+	   Eventually, note that we are currently preparing a "technical" paper to present how we assess the difficulty of the challenge and set those "upper" and "lower" bounds.
+        </p>
+	<p>
+	   (written on: October, 14th, 2018)
+        </p>
+    <hr>
+    </div>
+
+    <div class="container" style="margin-top: 100px">
+      <h1><a id="Postpone"></a>Kickoff of ALASKA contest is postponed</h1>
+        <p>
+	  Unfortunately, we have to postpone by a few days the beginning of the ALASKA contest.<br>
+          The two main reasons that lead us to postpone the beginning of the challenge are the following:
+	  <ul class="custom-list">
+	    <li class="custom-list-item"><div>
+		First of all, we have noted a minor bug in the conversion script. Since we wanted to provide datasets that will not be changed over all the duration of the challenge and that have been obtained exactly in the same way as the testing set we have to generate once again all the training jpeg data ;
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		The second issue is that, due to this minor bug, we are not 100% confident about the evaluation of the difficulty of the challenge we have made so far. We,  therefore, would rather give us a few more days to ensure that the contest will have the right difficulty, neither "piece of cake" easy nor infeasible.
+	    </div></li>
+	  </ul>
+        </p>
+        <p>
+	  However, we have some good news on the "plus sign". First to take into account the kickoff delay the challenge is extended by 15 days. We also have (eventually) uploaded the complete and final version of the RAW dataset (made of 50,000 images). <br>
+	  Second, we are currently preparing the jpeg version of the training set and we will provide, as per users request, stego images. So the training will be made of 50,000 cover and 50,000 stego images.<br>
+	  Eventually, as per other users request, we will provide uncompressed version of the jpeg images for those we might be interested in using the "wild dataset" for spatial domain steganalysis, forensics or any other research topics.
+        </p>
+	<p>
+	   We sincerely apologize for the inconvenience this delay may cause and thank you in advance for your understanding.
+        </p>
+	<p>
+	   (written on: September, 1st, 2018)
+        </p>
+    <hr>
+    </div>
+
+
+    <div class="container" style="margin-top: 100px">
+      <h1><a id="MidAugust"></a>A Midsummer Update</h1>
+        <p>
+	  ALASKA has been taking some vacations over the past days, but it is now back for setting everything for the beginning of the competition by September the 1st.<br>
+          The server has been restarted this morning for a quite important update.<br>
+          An important update ? What's new for now ? check it out:
+	  <ul class="custom-list">
+	    <li class="custom-list-item"><div>
+		Perhaps the most important changes, we have slighty modified the server configuration such that all web-browser, regardless their "behavior" with respect to certificate, are able to access the data proposed for download ;
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		The LeaderBoard has been changed to hide the full email address of users and to add the submission time (We do thank Andreas Westfeld for this clever suggestion) ;
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		The material for downloading RAW images has been updated; we have especially corrected a minor "bug" in the conversion script that may lead to full output full resolution images.
+	    </div></li>
+	    <li class="custom-list-item"><div>
+		Similarly, the proposed JPEG training sets have been updated since our dataset was corruped with this bug and, hence, contained full resolution jpeg images. <br> If you already download the jpeg training set you can either redownload the updated clean version or simply ignore the less than 1% images with high resolution.
+	    </div></li>
+	  </ul>
+        </p>
+        <p>
+	  Note that another important update will be made by the end of the week because we are currently updating the RAW image dataset. We increase the dataset from 41,000 images to approximatively 47,000 almost reaching the targeted size of 50,000 highly diverse raw images.<br>
+	  We will keep you update with any other changes.
+        </p>
+	<p>
+	   (written on: August, 19th, 2018)
+        </p>
+    <hr>
+    </div>
+
+    <div class="container" style="margin-top: 25px">
+      <h1><a id="First"></a>First blog entry</h1>
+        <p>
+          With, a day or two, of delay on the initial schedule, we are proud to official announce that the ALASKA steganalysis contest is now open. We will use this page to keep you up with, for instance, information on the number of submission and the countries of the competitors. During the warm up phase (all along month of August 2018) we will also keep you up with advances on the creation of the dataset and possible patches that we have to make.
+        </p>
+        <p>
+          For any remark, question or help, feel free to contact us at: <a href="mailto:alaska@utt.fr">alaska@utt.fr</a>.<br>
+	  We truly hope that you will have as much fun as possible during this ALASKA contest and that innovative steganalysis method for highly heterogeneous source of images will comes out. See you at IH&amp;MMSec'19 in June in Paris.
+        </p>
+        <p>
+          <img src="Adv_begins.jpg" alt="Italian Trulli">
+        </p>
+	<p>
+	   (written on: August, 3rd, 2018)
+        </p>
+    <hr>
+    </div>
+	</body>
+
+
+<footer class="text-center">
+        <div class="container">
+          <div>
+            <a target="_blank" href="https://www.utt.fr/international/study-at-utt/">
+            <img src="utt_logo.png" class="img-fluid" alt="utt logo" />&emsp;&emsp;&emsp;
+          </a>
+            <a target="_blank" href="http://lm2s.utt.fr/en/index.html">
+            <img src="lm2s_logo.png" style="height: 100px;" class="img-fluid" alt="lm2s logo" />&emsp;&emsp;&emsp;
+          </a>
+            <a target="_blank" href="https://www.cristal.univ-lille.fr/?lang=en">
+            <img src="cristal_logo.png" style="height: 100px;" class="img-fluid" alt="cristal logo" />
+          </a>
+          </div>
+          <div>
+           <p>
+	    The ALASKA contest is partially funded by the ANR-DGA ASTRID call 2018 (ALASKA project)
+           </p>
+	    <img alt="Logo ANR" src="ANR.png" style="height: 100pt;" />
+	    <img alt="Logo DGA" src="DGA.png" style="height: 100pt;" />
+	    <img alt="Logo ASTRID" src="astrid.png" style="height: 100pt;" />
+          </div>
+          <div class="disclaimers">
+            <a target="_blank" href="disclaimers.html">disclaimers</a>
+          </div>
+          <div>
+            <a target="_blank" href="http://www.utt.fr/en/index.html">
+            <img src="https://www.easycounter.com/counter.php?alaska_counter" class="img-fluid" alt="utt logo" />
+          </a>
+          </div>
+        </div>
+      </footer>
+
+	<script>
+		function backHome() {
+			window.location.replace(window.location.origin)
+		}
+	</script>
+</html>

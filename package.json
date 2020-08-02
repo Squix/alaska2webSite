@@ -1,0 +1,57 @@
+{
+  "name": "alaska",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "client": "preact build --src client --template client/template.html",
+    "client-dev": "preact watch --src client --template client/template.html",
+    "server": "node app.js",
+    "server-dev": "nodemon app.js",
+    "build": "preact build --src client --template client/template.html",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "dev": "concurrently --kill-others-on-fail \"npm run server-dev\" \"npm run client-dev\"",
+    "test": "NODE_ENV=test mocha",
+    "forever": "forever app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prudywsh/steganography_conf_website.git"
+  },
+  "keywords": [],
+  "author": "antoine prudhomme",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prudywsh/steganography_conf_website/issues"
+  },
+  "homepage": "https://github.com/prudywsh/steganography_conf_website#readme",
+  "dependencies": {
+    "body-parser": "^*",
+    "chai": "^*",
+    "concurrently": "^*",
+    "dotenv": "^*",
+    "express": "^*",
+    "faker": "^*",
+    "forever": "^*",
+    "js-yaml": "^*",
+    "jsonwebtoken": "^*",
+    "jwt-decode": "^*",
+    "mocha": "^*",
+    "morgan": "^*",
+    "mysql2": "^*",
+    "nodemailer": "^*",
+    "preact": "^*",
+    "preact-redux": "^*",
+    "react": "^*",
+    "react-scrollable-anchor": "^*",
+    "redux": "^*",
+    "redux-thunk": "^*",
+    "sequelize": "^*",
+    "sequelize-cli": "^*",
+    "supertest": "^*"
+  },
+  "devDependencies": {
+    "nodemon": "^*",
+    "preact-cli": "^*"
+  }
+}

@@ -1,0 +1,41 @@
+.custom-modal-wrapper {
+  position: fixed;
+  background-color: rgba(10, 10, 10, 0.70);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999998;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-modal {
+  position: fixed;
+  z-index: 999999;
+  background-color: black;
+  border: 2px solid #2070de;
+
+  width: 100%;
+  max-width: 800px;
+
+  padding-bottom: 15px;
+}
+
+.close-icon {
+  border: none !important;
+  border-radius: 50px !important;
+  position: absolute;
+  right: 0;
+  z-index: 1000000;
+}
+
+.modal-form {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 600px;
+}
