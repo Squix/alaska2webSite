@@ -6,6 +6,7 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
     Ce formulaire comporte 2 parties :
         La première pour trier selon les colonnes 2 à 19 du fichier CSV
         La deuxième pour trier selon les colonnes 20 à 16 du fichier CSV
+    Se formulaire doit se trouver dans une nouvelle section du site ? (nouveau composant)
 
 2 - ARCHITECTURE EXISTANTE
     Le site est composé d'un backend expressJS, et d'un frontend ReactJS, qui sont lancés en même temps sur le serveur (npm start)
@@ -16,3 +17,4 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
     Pour le composant "material", il existe des versions alternatives, probablement liée aux différentes périodes du concours ALASKA
         La version alternative actuelle est "material.js"
         La version "material_bu2.js" semble demande une authentification
+    Le Frontend utilise Bootstrap4
