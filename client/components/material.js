@@ -4,6 +4,7 @@ import reducer from "../reducer";
 import * as actions from "../actions";
 import ScrollableAnchor from "react-scrollable-anchor";
 import List from "./list";
+import { format } from "morgan";
 
 @connect(reducer, actions)
 class Material extends Component {
@@ -68,11 +69,34 @@ class Material extends Component {
       ],
     };
 
+    //Listes des valeurs possibles pour les éléments
+    const formAllowedValues = {
+      manufacturer:[
+        'Internet License Free (WeSaturate)',
+        'Apple',
+        'Canon',
+        'Google',
+        'HTC',
+        'Huawei',
+        'Kodak',
+        'Leica',
+        'LG',
+        'Nikon',
+        'Panasonic',
+        'Pentax',
+        'Ricoh',
+        'Samsung',
+        'Sigma',
+        'Sony',
+      ]
+    }
+
     return (
       <ScrollableAnchor id="material">
         <section class="download-section content-section text-center">
           <div class="container">
             <div class="col-lg-10 margin-auto">
+             
               <h2 class="text-center">Material</h2>
               <div>
                 <div class="text-justify">
@@ -374,6 +398,69 @@ class Material extends Component {
                 </p>
               </div>
             </div>
+             {/* Partie Interface de recherche */}
+             <h3>iMAGES DATASET</h3>
+              <form>
+                {/* Titres de section */}
+                <div class="row">
+                  {/* Partie acquisition */}
+                  <div class="col">
+                    <h4>Image acquisition</h4>
+                  </div>
+                  {/* Partie traitement */}
+                  <div class="col">
+                    <h4>Image processing</h4>
+                  </div>
+                </div>
+                {/* Cases de sélection */}
+                <div class="form-row">
+
+                  <div class="col">
+                      {/* Partie acquisition */}
+                      <div class="form-group">
+                        <label for="manufacturer">
+                          Manufacturer
+                        </label>
+                        <select name="manufacturer" id="manufacturer" className="form-control">
+                          
+                        </select>
+                      </div>
+                  </div>
+                
+                  <div class="col">
+                      {/* Partie traitement */}
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="useProcessingCriteria" id="useProcessingCriteria"/>
+                        <label for="useProcessingCriteria" class="form-check-label">
+                          Chercher selon les critères de
+                        </label>
+                      </div>
+                  </div>
+
+
+              </div>
+                {/* Ligne 1 */}
+                <div className="form-row">
+                  <div class="col">
+                      {/* Partie acquisition */}
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="useAcquisitionCriteria" id="useAcquisitionCriteria"/>
+                        <label for="useAcquisitionCriteria" class="form-check-label">
+                          Chercher selon les critères d'acquisition
+                        </label>
+                      </div>
+                  </div>
+                
+                  <div className="col">
+                    {/* Partie traitement */}
+                    <input type="checkbox" class="form-check-input" name="useAcquisitionCriteria" id="useAcquisitionCriteria"/>
+                    <label for="useAcquisitionCriteria" class="form-check-label">
+                      Manufacturer
+                    </label>
+                  </div>
+                </div>
+              </form>
+             
           </div>
         </section>
       </ScrollableAnchor>
