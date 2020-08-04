@@ -6,6 +6,18 @@ import ScrollableAnchor from "react-scrollable-anchor";
 import List from "./list";
 import { format } from "morgan";
 
+/*
+  Composant pour afficher une liste déroulante alimentée par un tableau
+*/
+function DynamicSelect(props) {
+
+  return <select multiple class="form-control" id={props.name} name={props.name}>
+     {props.optList.map(opt =>
+        <option key={opt} value={opt}>{opt}</option>)}
+  </select>
+  
+}
+
 @connect(reducer, actions)
 class Material extends Component {
   render() {
@@ -421,9 +433,7 @@ class Material extends Component {
                         <label for="manufacturer">
                           Manufacturer
                         </label>
-                        <select name="manufacturer" id="manufacturer" className="form-control">
-                          
-                        </select>
+                        <DynamicSelect name="manufacturer" optList={formAllowedValues.manufacturer}/>
                       </div>
                   </div>
                 
