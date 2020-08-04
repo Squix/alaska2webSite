@@ -5,7 +5,7 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
     Développer un formulaire qui permet de faire le tri dans la base de données du site(un fichier CSV)
     Ce formulaire comporte 2 parties :
         La première pour trier selon les colonnes 2 à 19 du fichier CSV
-        La deuxième pour trier selon les colonnes 20 à 16 du fichier CSV
+        La deuxième pour trier selon les colonnes 20 à 26 du fichier CSV
     Se formulaire doit se trouver dans une nouvelle section du site ? (nouveau composant)
 
 2 - ARCHITECTURE EXISTANTE

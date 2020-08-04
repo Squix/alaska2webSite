@@ -18,6 +18,28 @@ function DynamicSelect(props) {
   
 }
 
+/*
+  Composant pour afficher un choix entre un min et max
+*/
+function InputRange(props) {
+
+  //on génère la liste d'options
+  let rangeOptList = []
+  let actualOpt = parseInt(props.min)
+  let max = parseInt(props.max)
+  console.log("propsInfo", max)
+  while (actualOpt <= max) {
+    rangeOptList.push(actualOpt)
+    actualOpt++
+  }
+
+  return <select multiple class="form-control" id={props.name} name={props.name}>
+     {rangeOptList.map(opt =>
+        <option key={opt} value={opt}>{opt}</option>)}
+  </select>
+
+}
+
 @connect(reducer, actions)
 class Material extends Component {
   render() {
@@ -83,6 +105,7 @@ class Material extends Component {
 
     //Listes des valeurs possibles pour les éléments
     const formAllowedValues = {
+      //ligne 1
       manufacturer:[
         'Internet License Free (WeSaturate)',
         'Apple',
@@ -100,6 +123,63 @@ class Material extends Component {
         'Samsung',
         'Sigma',
         'Sony',
+      ],
+      demosaicing_algorithm:[
+        "Amaze",
+        "DCB2",
+        "Fast",
+        "IGV",
+      ],
+      //ligne 2
+      camera_id:[
+        "Internet License Free (WeSaturate)",
+        "1-AW1",
+        "Alpha6000 (ILCE-6000)",
+        "Alpha 7R",
+        "Canon PowerShot G11",
+        "D3000 (Lens #1)",
+        "D3000 (Lens #2)",
+        "D5200 (device #1)",
+        "D5200 (device #2)",
+        "D5200 (device #3)",
+        "D5600 (Lens #1)",
+        "D5600 (Lens #2)",
+        "D610",
+        "D7100",
+        "D810",
+        "D90",
+        "DMC-FZ28",
+        "DMC-GM1",
+        "DMC-TZ60",
+        "EasyShare Z990",
+        "EOS 100D (device #1)",
+        "EOS 100D (device #2)",
+        "EOS 20D",
+        "EOS 500D",
+        "EOS 60D",
+        "EOS 700D",
+        "G5 (Sensor #1)",
+        "G5 (Sensor #2)",
+        "G7 fit (LM-Q850)",
+        "Galaxy S8 (SM-G950F)",
+        "Galaxy S9+ (SM-G965F)",
+        "GR DIGITAL III",
+        "Honor 8 (FRD-L09)",
+        "iPad Pro 12.9 (1st Generation)",
+        "iPad Pro 12.9 (2nd Generation)",
+        "*ist DS",  
+        "K10D (DNG Image File)",
+        "K10D (PEF Image File)",
+        "K-50 (device #1)",
+        "K-50 (device #2)",
+        "M9",
+        "M Monochrom",
+        "One A9",
+        "One M9",
+        "P20 Lite (ANE-LX1)",
+        "Pixel XL",
+        "SD10",
+        "SD1 Merrill",
       ]
     }
 
@@ -410,7 +490,7 @@ class Material extends Component {
                 </p>
               </div>
             </div>
-             {/* Partie Interface de recherche */}
+  {/* Partie Interface de recherche */}
              <h3>iMAGES DATASET</h3>
               <form>
                 {/* Titres de section */}
@@ -425,6 +505,28 @@ class Material extends Component {
                   </div>
                 </div>
                 {/* Cases de sélection */}
+                <div className="form-row">
+                  <div class="col">
+                      {/* Partie acquisition */}
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="useAcquisitionCriteria" id="useAcquisitionCriteria"/>
+                        <label for="useAcquisitionCriteria" class="form-check-label">
+                          Chercher selon les critères d'acquisition
+                        </label>
+                      </div>
+                  </div>
+                
+                  <div className="col">
+                    {/* Partie traitement */}
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="useProcessingCriteria" id="useProcessingCriteria"/>
+                        <label for="useProcessingCriteria" class="form-check-label">
+                          Chercher selon les critères de traitement
+                        </label>
+                      </div>
+                  </div>
+                </div>
+                {/* Ligne 1 */}
                 <div class="form-row">
 
                   <div class="col">
@@ -439,36 +541,77 @@ class Material extends Component {
                 
                   <div class="col">
                       {/* Partie traitement */}
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="useProcessingCriteria" id="useProcessingCriteria"/>
-                        <label for="useProcessingCriteria" class="form-check-label">
-                          Chercher selon les critères de
+                      <div class="form-group">
+                        <label for="demosaicing_algorithm">
+                          Demosaicing algorithm
                         </label>
+                        <DynamicSelect name="demosaicing_algorithm" optList={formAllowedValues.demosaicing_algorithm}/>
                       </div>
                   </div>
 
 
               </div>
-                {/* Ligne 1 */}
-                <div className="form-row">
+
+                {/* Ligne 2 */}
+                <div class="form-row">
+
                   <div class="col">
                       {/* Partie acquisition */}
+                      <div class="form-group">
+                        <label for="camera_id">
+                          Camera ID
+                        </label>
+                        <DynamicSelect name="camera_id" optList={formAllowedValues.camera_id}/>
+                      </div>
+                  </div>
+
+                  <div class="col">
+                      {/* Partie traitement */}
+                      <div className="form-group">
+                        <label htmlFor="">USM / DEN order</label>
+                      </div>
                       <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="useAcquisitionCriteria" id="useAcquisitionCriteria"/>
-                        <label for="useAcquisitionCriteria" class="form-check-label">
-                          Chercher selon les critères d'acquisition
+                        <input class="form-check-input" type="radio" name="usm|den_order" id="usm_after_den_choice" value="0" checked/>
+                        <label for="usm_after_den_choice" class="form-check-label">
+                          USM after DEN
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="usm|den_order" id="usm_before_den_choice" value="1" />
+                        <label for="usm_after_den_choice" class="form-check-label">
+                          USM before DEN
                         </label>
                       </div>
                   </div>
-                
-                  <div className="col">
-                    {/* Partie traitement */}
-                    <input type="checkbox" class="form-check-input" name="useAcquisitionCriteria" id="useAcquisitionCriteria"/>
-                    <label for="useAcquisitionCriteria" class="form-check-label">
-                      Manufacturer
-                    </label>
+
+
                   </div>
-                </div>
+                  
+                {/* Ligne 3 */}
+                <div class="form-row">
+
+                  <div class="col">
+                      {/* Partie acquisition */}
+                      <div class="form-group">
+                        <label for="year">
+                          Year
+                        </label>
+                        <InputRange name="year" max="2018" min="2003" />
+                      </div>
+                  </div>
+                
+                  <div class="col">
+                      {/* Partie traitement */}
+                      <div class="form-group">
+                        <label for="demosaicing_algorithm">
+                          Demosaicing algorithm
+                        </label>
+                        <DynamicSelect name="demosaicing_algorithm" optList={formAllowedValues.demosaicing_algorithm}/>
+                      </div>
+                  </div>
+
+
+              </div>
               </form>
              
           </div>
