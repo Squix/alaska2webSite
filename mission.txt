@@ -12,6 +12,7 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
     Le site est composé d'un backend expressJS, et d'un frontend ReactJS, qui sont lancés en même temps sur le serveur (npm start)
     ReactJS semble complémenté/supplanté par PreactJS
     On peut lancer uniquement le frontend en mode dev pour le modifier sereinement avec "npm run client-dev"
+        Attention, avant cela le serveur doit aussi être lancé pour éviter une erreur SSL (npm run server)
     PreactJS utilise Redux, "PreactRedux"
     Présence de fichiers étranges en _bu dans le code, ça semble être de la backup, possiblement liée à l'IDE du précédent consultant ?
     Pour le composant "material", il existe des versions alternatives, probablement liée aux différentes périodes du concours ALASKA
