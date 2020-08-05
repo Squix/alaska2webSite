@@ -1,20 +1,34 @@
 import { h, Component } from "preact";
-import { connect } from "preact-redux";
+import { connect } from "react-redux";
 import reducer from "../reducer";
 import * as actions from "../actions";
 import ScrollableAnchor from "react-scrollable-anchor";
 import List from "./list";
 import { format } from "morgan";
 
+//import des composants d'UI
+import Select from "react-select";
+
 /*
   Composant pour afficher une liste déroulante alimentée par un tableau
 */
-function DynamicSelect(props) {
+class DynamicSelect extends Component {
 
-  return <select multiple class="form-control" id={props.name} name={props.name}>
-     {props.optList.map(opt =>
-        <option key={opt} value={opt}>{opt}</option>)}
-  </select>
+  //fonction qui s'active à sélection, afin 
+  handleChange(event) {
+    console.log("event", event.target.value)
+  }
+
+  render() {
+    return(
+      <Select options={[{value:"truch",label:"Truch"}]} />
+      /* <select onChange={this.handleChange} multiple={true} class="form-control" id={this.props.name} name={this.props.name}>
+        {this.props.optList.map(opt =>
+            <option key={opt} value={opt}>{opt}</option>)}
+      </select> */
+    )
+    
+  }
   
 }
 
@@ -28,7 +42,7 @@ function InputRange(props) {
       let rangeOptList = []
       let actualOpt = parseFloat(props.min)
       let max = parseFloat(props.max)
-      console.log("propsInfo", max)
+      //console.log("propsInfo", max)
       while (actualOpt <= max) {
         rangeOptList.push(actualOpt)
         actualOpt = actualOpt + parseFloat(props.step)
@@ -55,8 +69,15 @@ InputRange.defaultProps = {step:1}
 @connect(reducer, actions)
 class Material extends Component {
 
+  //fonction pour gérer l'envoi du formulaire
+  onChoiceSubmit() {
 
-  
+  }
+
+  //fonction qui gère la sélection de chaque élément
+  handleInputChange(event) {
+
+  }
 
   render() {
     const list = {
@@ -303,7 +324,7 @@ class Material extends Component {
     }
 
     return (
-      <ScrollableAnchor id="material">
+      <ScrollableAnchor id={'material'}>
         <section class="download-section content-section text-center">
           <div class="container">
             <div class="col-lg-10 margin-auto">

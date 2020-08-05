@@ -1,4 +1,4 @@
-import { Provider } from 'preact-redux'
+import { Provider } from 'react-redux'
 import reducer from './reducer'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
