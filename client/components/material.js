@@ -14,14 +14,24 @@ import Select from "react-select";
 */
 class DynamicSelect extends Component {
 
-  //fonction qui s'active à sélection, afin 
-  handleChange(event) {
-    console.log("event", event.target.value)
+  //fonction qui s'active à la sélection, afin de modifier le state pour avoir les nouvelles valeurs sélectionnées
+  handleChange(newValue) {
+    console.log("event", newValue)
+  }
+
+  options = []
+
+  componentWillMount() {
+    for (const opt of this.props.optList) {
+      this.options.push({
+        value:opt, label:opt
+      })
+    }
   }
 
   render() {
     return(
-      <Select options={[{value:"truch",label:"Truch"}]} />
+      <Select onChange={this.handleChange} defaultValue={this.options} isMulti options={this.options} />
       /* <select onChange={this.handleChange} multiple={true} class="form-control" id={this.props.name} name={this.props.name}>
         {this.props.optList.map(opt =>
             <option key={opt} value={opt}>{opt}</option>)}
