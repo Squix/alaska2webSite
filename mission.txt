@@ -19,3 +19,9 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
         La version alternative actuelle est "material.js"
         La version "material_bu2.js" semble demande une authentification
     Le Frontend utilise Bootstrap4
+
+3 - TRAVAIL EFFECTUÉ
+    Création d'un formulaire reprenant toutes les valeurs données
+
+4 - PROBLÈMES RECONTRÉS
+    Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne)
