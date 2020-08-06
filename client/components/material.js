@@ -1,4 +1,4 @@
-import { h, Component } from "preact";
+import { h, Component, Fragment } from "preact";
 import { connect } from "react-redux";
 import reducer from "../reducer";
 import * as actions from "../actions";
@@ -14,24 +14,36 @@ import Select from "react-select";
 */
 class DynamicSelect extends Component {
 
-  //fonction qui s'active à la sélection, afin de modifier le state pour avoir les nouvelles valeurs sélectionnées
-  handleChange(newValue) {
-    console.log("event", newValue)
+  constructor() {
+    super()
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  options = []
-
-  componentWillMount() {
-    for (const opt of this.props.optList) {
-      this.options.push({
-        value:opt, label:opt
+  toUsableSelectValue(rawOptList) {
+    let options = []
+    for (const opt of rawOptList) {
+      options.push({
+        value:opt,
+        label:opt
       })
     }
+    return options
+  }
+
+  //fonction qui s'active à la sélection, afin de renvoyer les nouvelles valeurs sélectionnées
+  handleChange(selectedOptions) {
+    //console.log("DynamicSelect value", selectedOptions)
+    //on renvoie les nouvelles options ainsi que le nom du control
+    this.props.onInput(selectedOptions, this.props.name)
   }
 
   render() {
     return(
-      <Select onChange={this.handleChange} defaultValue={this.options} isMulti options={this.options} />
+      <Fragment>
+         <p>{this.props.value}</p>
+        <Select onChange={this.handleChange} value={this.props.value} isMulti options={this.toUsableSelectValue(this.props.optList)} />
+      </Fragment>
+     
       /* <select onChange={this.handleChange} multiple={true} class="form-control" id={this.props.name} name={this.props.name}>
         {this.props.optList.map(opt =>
             <option key={opt} value={opt}>{opt}</option>)}
@@ -79,14 +91,215 @@ InputRange.defaultProps = {step:1}
 @connect(reducer, actions)
 class Material extends Component {
 
+  //Listes des valeurs possibles pour les éléments
+  formAllowedValues = {
+    //ligne 1
+    manufacturer:[
+      'Internet License Free (WeSaturate)',
+      'Apple',
+      'Canon',
+      'Google',
+      'HTC',
+      'Huawei',
+      'Kodak',
+      'Leica',
+      'LG',
+      'Nikon',
+      'Panasonic',
+      'Pentax',
+      'Ricoh',
+      'Samsung',
+      'Sigma',
+      'Sony',
+    ],
+    demosaicing_algorithm:[
+      "Amaze",
+      "DCB2",
+      "Fast",
+      "IGV",
+    ],
+    //ligne 2
+    camera_id:[
+      "Internet License Free (WeSaturate)",
+      "1-AW1",
+      "Alpha6000 (ILCE-6000)",
+      "Alpha 7R",
+      "Canon PowerShot G11",
+      "D3000 (Lens #1)",
+      "D3000 (Lens #2)",
+      "D5200 (device #1)",
+      "D5200 (device #2)",
+      "D5200 (device #3)",
+      "D5600 (Lens #1)",
+      "D5600 (Lens #2)",
+      "D610",
+      "D7100",
+      "D810",
+      "D90",
+      "DMC-FZ28",
+      "DMC-GM1",
+      "DMC-TZ60",
+      "EasyShare Z990",
+      "EOS 100D (device #1)",
+      "EOS 100D (device #2)",
+      "EOS 20D",
+      "EOS 500D",
+      "EOS 60D",
+      "EOS 700D",
+      "G5 (Sensor #1)",
+      "G5 (Sensor #2)",
+      "G7 fit (LM-Q850)",
+      "Galaxy S8 (SM-G950F)",
+      "Galaxy S9+ (SM-G965F)",
+      "GR DIGITAL III",
+      "Honor 8 (FRD-L09)",
+      "iPad Pro 12.9 (1st Generation)",
+      "iPad Pro 12.9 (2nd Generation)",
+      "*ist DS",  
+      "K10D (DNG Image File)",
+      "K10D (PEF Image File)",
+      "K-50 (device #1)",
+      "K-50 (device #2)",
+      "M9",
+      "M Monochrom",
+      "One A9",
+      "One M9",
+      "P20 Lite (ANE-LX1)",
+      "Pixel XL",
+      "SD10",
+      "SD1 Merrill",
+    ],
+    //ligne 3
+    sharpenning:[
+      "OFF",
+      "ON (low)",
+      "ON (modera)",
+      "ON (high)"
+    ],
+    //ligne 4
+    camera_type:[
+      "Internet License Free (WeSaturate)",
+      "Bridge",
+      "Compact",
+      "DSLR",
+      "Mirrorless",
+      "Smartphone/Tablet",
+    ],
+    denoising:[
+      "OFF",
+      "ON (low)",
+      "ON (modera)",
+      "ON (high)"
+    ],
+    //ligne 5
+    resizing: {
+      action:[
+        "CROP ONLY (no resize)",
+        "RESIZE ONLY (no crop)",
+        "Crop And Resize",
+      ],
+      type:[
+        "BICUBIC",
+        "BILINEAR",
+        "LANCZOS",
+        "NEAREST",
+        "NONE (CROP ONLY)",
+      ],
+      last_number:[
+        "upsampling > 1 ",
+        "downsampling low  0.5 <  < 1",
+        "downsampling moderate  0.25 <  < 0.5",
+        "downsampling strong  0.25",
+      ]
+    },
+    //ligne 6
+    image_size:[
+      "1024x1024",
+      "1024x512",
+      "1024x640",
+      "1024x720",
+      "512x1024",
+      "512x512",
+      "512x640",
+      "512x720",
+      "640x1024",
+      "640x512",
+      "640x640",
+      "640x720",
+      "720x1024",
+      "720x512",
+      "720x640",
+      "720x720",
+    ],
+    //ligne 7
+    sensor_size:[
+      '1" (13.2x8.8)',
+      '1/1.7"',
+      '1/2.3"',
+      '1/2.33"',
+      '1/2.4"',
+      '1/2.55"',
+      '1/2.6"',
+      '1/2.9"',
+      '1/3"',
+      '1/3.1"',
+      '1/3.6"',
+      '1.55" (20.7x13.8)',
+      '4/3" (17.3x13.0)',
+      'APS-C',
+      'Full Frame',
+    ],
+    //ligne 17
+    sensor_model:[
+      "Foveon X3",
+      "Kodak KAF-18500",
+      "Samsung ISOCELL 2L2 (S5K2L2) {OR IMX333}",
+      "Samsung ISOCELL Plus 2L3 (S5K2L3) {OR IMX345}",
+      "Sony Exmor IMX214RS",
+      "Sony Exmor IMX378 RS",
+      "Sony IMX038 Exmor",
+      "Sony IMX071 Exmor",
+      "Sony IMX094 Exmor",
+      "Sony IMX128 Exmor",
+      "Sony IMX193 Exmor",
+      "Sony IMX210 Exmor",
+      "Sony IMX234 Exmor RS",
+      "Sony IMX268 Exmor RS",
+      "Sony IMX286 Exmor RS",
+      "Sony IMX315 Exmor RS",
+      "Sony IMX351 Exmor RS",
+      "Sony IMX493 Exmor",
+      "Toshiba BSI T4KA7",
+      "Toshiba TOS-5105",
+    ]
+  }
+
+  toUsableSelectValue(rawOptList) {
+    let options = []
+    for (const opt of rawOptList) {
+      options.push({
+        value:opt,
+        label:opt
+      })
+    }
+    return options
+  }
+
+  constructor() {
+    super()
+    this.state = {manufacturer:this.toUsableSelectValue(this.formAllowedValues.manufacturer)}
+    this.handleInputChange = this.handleInputChange.bind(this)
+  }
+
   //fonction pour gérer l'envoi du formulaire
   onChoiceSubmit() {
 
   }
 
   //fonction qui gère la sélection de chaque élément
-  handleInputChange(event) {
-
+  handleInputChange(newValue, name) {
+    console.log("MaterialComponent value", newValue)
+    this.setState({ [name]: newValue })
   }
 
   render() {
@@ -334,7 +547,8 @@ class Material extends Component {
     }
 
     return (
-      <ScrollableAnchor id={'material'}>
+      <Fragment>
+        
         <section class="download-section content-section text-center">
           <div class="container">
             <div class="col-lg-10 margin-auto">
@@ -685,7 +899,11 @@ class Material extends Component {
                         <label for="manufacturer">
                           Manufacturer
                         </label>
-                        <DynamicSelect name="manufacturer" optList={formAllowedValues.manufacturer}/>
+                        <DynamicSelect 
+                            optList={this.formAllowedValues.manufacturer} 
+                            onInput={this.handleInputChange} 
+                            name="manufacturer" 
+                            value={this.state.manufacturer}/>
                       </div>
                   </div>
                 
@@ -1039,7 +1257,8 @@ class Material extends Component {
              
           </div>
         </section>
-      </ScrollableAnchor>
+  
+      </Fragment>
     );
   }
 }
