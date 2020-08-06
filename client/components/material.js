@@ -39,10 +39,11 @@ class DynamicSelect extends Component {
 
   render() {
     return(
-      <Fragment>
-         <p>{this.props.value}</p>
-        <Select onChange={this.handleChange} value={this.props.value} isMulti options={this.toUsableSelectValue(this.props.optList)} />
-      </Fragment>
+        <Select 
+          onChange={this.handleChange} 
+          value={this.props.value} 
+          isMulti 
+          options={this.toUsableSelectValue(this.props.optList)} />
      
       /* <select onChange={this.handleChange} multiple={true} class="form-control" id={this.props.name} name={this.props.name}>
         {this.props.optList.map(opt =>
