@@ -1,3 +1,6 @@
+// Must be the first import
+import "preact/debug";
+
 import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 import reduce from '../reducer'
