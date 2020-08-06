@@ -20,6 +20,7 @@ class DynamicSelect extends Component {
   }
 
   toUsableSelectValue(rawOptList) {
+    //console.log(rawOptList)
     let options = []
     for (const opt of rawOptList) {
       options.push({
@@ -193,26 +194,26 @@ class Material extends Component {
       "ON (high)"
     ],
     //ligne 5
-    resizing: {
-      action:[
-        "CROP ONLY (no resize)",
-        "RESIZE ONLY (no crop)",
-        "Crop And Resize",
-      ],
-      type:[
-        "BICUBIC",
-        "BILINEAR",
-        "LANCZOS",
-        "NEAREST",
-        "NONE (CROP ONLY)",
-      ],
-      last_number:[
-        "upsampling > 1 ",
-        "downsampling low  0.5 <  < 1",
-        "downsampling moderate  0.25 <  < 0.5",
-        "downsampling strong  0.25",
-      ]
-    },
+   
+    resizing_action:[
+      "CROP ONLY (no resize)",
+      "RESIZE ONLY (no crop)",
+      "Crop And Resize",
+    ],
+    resizing_type:[
+      "BICUBIC",
+      "BILINEAR",
+      "LANCZOS",
+      "NEAREST",
+      "NONE (CROP ONLY)",
+    ],
+    resizing_last_number:[
+      "upsampling > 1 ",
+      "downsampling low  0.5 <  < 1",
+      "downsampling moderate  0.25 <  < 0.5",
+      "downsampling strong  0.25",
+    ],
+  
     //ligne 6
     image_size:[
       "1024x1024",
@@ -275,7 +276,9 @@ class Material extends Component {
     ]
   }
 
+  //fonction utilitaire pour convertir les valeurs en un objet utilisable par react-select
   toUsableSelectValue(rawOptList) {
+    //console.log(rawOptList)
     let options = []
     for (const opt of rawOptList) {
       options.push({
@@ -286,9 +289,20 @@ class Material extends Component {
     return options
   }
 
+  //fonction initialisant le state de tous les éléments du formulaire
+  initState() {
+    this.state = {}
+    for (const elem_key in this.formAllowedValues) {
+      if (this.formAllowedValues.hasOwnProperty(elem_key)) {
+        
+        this.state[elem_key] = this.toUsableSelectValue(this.formAllowedValues[elem_key])
+      }
+    }
+  }
+
   constructor() {
     super()
-    this.state = {manufacturer:this.toUsableSelectValue(this.formAllowedValues.manufacturer)}
+    this.initState()
     this.handleInputChange = this.handleInputChange.bind(this)
   }
 
@@ -299,7 +313,7 @@ class Material extends Component {
 
   //fonction qui gère la sélection de chaque élément
   handleInputChange(newValue, name) {
-    console.log("MaterialComponent value", newValue)
+    //console.log("MaterialComponent value", newValue)
     this.setState({ [name]: newValue })
   }
 
@@ -363,189 +377,6 @@ class Material extends Component {
         </div>,
       ],
     };
-
-    //Listes des valeurs possibles pour les éléments
-    const formAllowedValues = {
-      //ligne 1
-      manufacturer:[
-        'Internet License Free (WeSaturate)',
-        'Apple',
-        'Canon',
-        'Google',
-        'HTC',
-        'Huawei',
-        'Kodak',
-        'Leica',
-        'LG',
-        'Nikon',
-        'Panasonic',
-        'Pentax',
-        'Ricoh',
-        'Samsung',
-        'Sigma',
-        'Sony',
-      ],
-      demosaicing_algorithm:[
-        "Amaze",
-        "DCB2",
-        "Fast",
-        "IGV",
-      ],
-      //ligne 2
-      camera_id:[
-        "Internet License Free (WeSaturate)",
-        "1-AW1",
-        "Alpha6000 (ILCE-6000)",
-        "Alpha 7R",
-        "Canon PowerShot G11",
-        "D3000 (Lens #1)",
-        "D3000 (Lens #2)",
-        "D5200 (device #1)",
-        "D5200 (device #2)",
-        "D5200 (device #3)",
-        "D5600 (Lens #1)",
-        "D5600 (Lens #2)",
-        "D610",
-        "D7100",
-        "D810",
-        "D90",
-        "DMC-FZ28",
-        "DMC-GM1",
-        "DMC-TZ60",
-        "EasyShare Z990",
-        "EOS 100D (device #1)",
-        "EOS 100D (device #2)",
-        "EOS 20D",
-        "EOS 500D",
-        "EOS 60D",
-        "EOS 700D",
-        "G5 (Sensor #1)",
-        "G5 (Sensor #2)",
-        "G7 fit (LM-Q850)",
-        "Galaxy S8 (SM-G950F)",
-        "Galaxy S9+ (SM-G965F)",
-        "GR DIGITAL III",
-        "Honor 8 (FRD-L09)",
-        "iPad Pro 12.9 (1st Generation)",
-        "iPad Pro 12.9 (2nd Generation)",
-        "*ist DS",  
-        "K10D (DNG Image File)",
-        "K10D (PEF Image File)",
-        "K-50 (device #1)",
-        "K-50 (device #2)",
-        "M9",
-        "M Monochrom",
-        "One A9",
-        "One M9",
-        "P20 Lite (ANE-LX1)",
-        "Pixel XL",
-        "SD10",
-        "SD1 Merrill",
-      ],
-      //ligne 3
-      sharpenning:[
-        "OFF",
-        "ON (low)",
-        "ON (modera)",
-        "ON (high)"
-      ],
-      //ligne 4
-      camera_type:[
-        "Internet License Free (WeSaturate)",
-        "Bridge",
-        "Compact",
-        "DSLR",
-        "Mirrorless",
-        "Smartphone/Tablet",
-      ],
-      denoising:[
-        "OFF",
-        "ON (low)",
-        "ON (modera)",
-        "ON (high)"
-      ],
-      //ligne 5
-      resizing: {
-        action:[
-          "CROP ONLY (no resize)",
-          "RESIZE ONLY (no crop)",
-          "Crop And Resize",
-        ],
-        type:[
-          "BICUBIC",
-          "BILINEAR",
-          "LANCZOS",
-          "NEAREST",
-          "NONE (CROP ONLY)",
-        ],
-        last_number:[
-          "upsampling > 1 ",
-          "downsampling low  0.5 <  < 1",
-          "downsampling moderate  0.25 <  < 0.5",
-          "downsampling strong  0.25",
-        ]
-      },
-      //ligne 6
-      image_size:[
-        "1024x1024",
-        "1024x512",
-        "1024x640",
-        "1024x720",
-        "512x1024",
-        "512x512",
-        "512x640",
-        "512x720",
-        "640x1024",
-        "640x512",
-        "640x640",
-        "640x720",
-        "720x1024",
-        "720x512",
-        "720x640",
-        "720x720",
-      ],
-      //ligne 7
-      sensor_size:[
-        '1" (13.2x8.8)',
-        '1/1.7"',
-        '1/2.3"',
-        '1/2.33"',
-        '1/2.4"',
-        '1/2.55"',
-        '1/2.6"',
-        '1/2.9"',
-        '1/3"',
-        '1/3.1"',
-        '1/3.6"',
-        '1.55" (20.7x13.8)',
-        '4/3" (17.3x13.0)',
-        'APS-C',
-        'Full Frame',
-      ],
-      //ligne 17
-      sensor_model:[
-        "Foveon X3",
-        "Kodak KAF-18500",
-        "Samsung ISOCELL 2L2 (S5K2L2) {OR IMX333}",
-        "Samsung ISOCELL Plus 2L3 (S5K2L3) {OR IMX345}",
-        "Sony Exmor IMX214RS",
-        "Sony Exmor IMX378 RS",
-        "Sony IMX038 Exmor",
-        "Sony IMX071 Exmor",
-        "Sony IMX094 Exmor",
-        "Sony IMX128 Exmor",
-        "Sony IMX193 Exmor",
-        "Sony IMX210 Exmor",
-        "Sony IMX234 Exmor RS",
-        "Sony IMX268 Exmor RS",
-        "Sony IMX286 Exmor RS",
-        "Sony IMX315 Exmor RS",
-        "Sony IMX351 Exmor RS",
-        "Sony IMX493 Exmor",
-        "Toshiba BSI T4KA7",
-        "Toshiba TOS-5105",
-      ]
-    }
 
     return (
       <Fragment>
@@ -914,8 +745,11 @@ class Material extends Component {
                         <label for="demosaicing_algorithm">
                           Demosaicing algorithm
                         </label>
-                        <DynamicSelect name="demosaicing_algorithm" optList={formAllowedValues.demosaicing_algorithm}/>
-                      </div>
+                        <DynamicSelect 
+                            optList={this.formAllowedValues.demosaicing_algorithm} 
+                            onInput={this.handleInputChange} 
+                            name="demosaicing_algorithm" 
+                            value={this.state.demosaicing_algorithm}/>                      </div>
                   </div>
 
 
@@ -930,7 +764,11 @@ class Material extends Component {
                         <label for="camera_id">
                           Camera ID
                         </label>
-                        <DynamicSelect name="camera_id" optList={formAllowedValues.camera_id}/>
+                        <DynamicSelect 
+                            optList={this.formAllowedValues.camera_id} 
+                            onInput={this.handleInputChange} 
+                            name="camera_id" 
+                            value={this.state.camera_id}/>
                       </div>
                   </div>
 
@@ -975,7 +813,11 @@ class Material extends Component {
                         <label for="sharpenning">
                            Sharpenning
                         </label>
-                        <DynamicSelect name="sharpenning" optList={formAllowedValues.sharpenning}/>
+                        <DynamicSelect 
+                            optList={this.formAllowedValues.sharpenning} 
+                            onInput={this.handleInputChange} 
+                            name="sharpenning" 
+                            value={this.state.sharpenning}/>
                       </div>
                   </div>
 
@@ -990,7 +832,11 @@ class Material extends Component {
                         <label for="camera_type">
                           Camera Type
                         </label>
-                        <DynamicSelect name="camera_type" optList={formAllowedValues.camera_type}/>
+                        <DynamicSelect 
+                            optList={this.formAllowedValues.camera_type} 
+                            onInput={this.handleInputChange} 
+                            name="camera_type" 
+                            value={this.state.camera_type}/>
                       </div>
                   </div>
                 
@@ -1000,7 +846,11 @@ class Material extends Component {
                         <label for="denoising">
                           Denoising 
                         </label>
-                        <DynamicSelect name="denoising" optList={formAllowedValues.denoising}/>
+                        <DynamicSelect 
+                            optList={this.formAllowedValues.denoising} 
+                            onInput={this.handleInputChange} 
+                            name="denoising" 
+                            value={this.state.denoising}/>
                       </div>
                   </div>
 
@@ -1026,9 +876,21 @@ class Material extends Component {
                           Resizing 
                         </label>
                         <div className="input-group" id="resizing">
-                          <DynamicSelect name="resizing_action" optList={formAllowedValues.resizing.action}/>
-                          <DynamicSelect name="resizing_type" optList={formAllowedValues.resizing.type}/>
-                          <DynamicSelect name="resizing_last_number" optList={formAllowedValues.resizing.last_number}/>
+                            <DynamicSelect 
+                              optList={this.formAllowedValues.resizing_action} 
+                              onInput={this.handleInputChange} 
+                              name="resizing_action" 
+                              value={this.state.resizing_action}/>
+                            <DynamicSelect 
+                              optList={this.formAllowedValues.resizing_type} 
+                              onInput={this.handleInputChange} 
+                              name="resizing_type" 
+                              value={this.state.resizing_type}/>
+                            <DynamicSelect 
+                              optList={this.formAllowedValues.resizing_last_number} 
+                              onInput={this.handleInputChange} 
+                              name="resizing_last_number" 
+                              value={this.state.resizing_last_number}/>
                         </div>
                       </div>
                   </div>
@@ -1053,7 +915,11 @@ class Material extends Component {
                         <label for="image_size">
                           ImageSize  
                         </label>
-                        <DynamicSelect name="image_size" optList={formAllowedValues.image_size}/>
+                        <DynamicSelect 
+                              optList={this.formAllowedValues.image_size} 
+                              onInput={this.handleInputChange} 
+                              name="image_size" 
+                              value={this.state.image_size}/>
                       </div>
                   </div>
 
@@ -1181,7 +1047,11 @@ class Material extends Component {
                         <label for="sensor_size">
                           Sensor Size
                         </label>
-                        <DynamicSelect name="sensor_size" optList={formAllowedValues.sensor_size}/>
+                        <DynamicSelect 
+                              optList={this.formAllowedValues.sensor_size} 
+                              onInput={this.handleInputChange} 
+                              name="sensor_size" 
+                              value={this.state.sensor_size}/>
                       </div>
                   </div>
 
@@ -1247,7 +1117,11 @@ class Material extends Component {
                         <label for="sensor_model">
                           Sensor Model
                         </label>
-                        <DynamicSelect name="sensor_model" optList={formAllowedValues.sensor_model}/>
+                        <DynamicSelect 
+                              optList={this.formAllowedValues.sensor_model} 
+                              onInput={this.handleInputChange} 
+                              name="sensor_model" 
+                              value={this.state.sensor_model}/>
                       </div>
                   </div>
 
