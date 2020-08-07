@@ -12,6 +12,7 @@ import Rules from './rules'
 import Acknowledgements from './acknowledgements'
 import About from './about'
 import Material from './material'
+import DbSorter from './dbSorter'
 import Footer from './footer'
 import HallOfFame from './HallOfFame'
 import LoginModal from './loginModal'
@@ -59,6 +60,7 @@ class App extends Component {
         <About />
         <Timeline />
         <Material />
+        <DbSorter />
         <Rules />
         <HallOfFame />
         <Acknowledgements />
