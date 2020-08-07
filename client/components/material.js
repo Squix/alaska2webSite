@@ -8,6 +8,7 @@ import { format } from "morgan";
 
 //import des composants d'UI
 import Select from "react-select";
+import {Range, getTrackBackground} from 'react-range'
 
 /*
   Composant pour afficher une liste déroulante alimentée par un tableau
@@ -59,9 +60,69 @@ class DynamicSelect extends Component {
 /*
   Composant pour afficher un choix entre un min et max
 */
-function InputRange(props) {
+class InputRange extends Component {
 
-  if(!props.disabled) {
+  constructor() {
+    super()
+    this.handleRangeChange = this.handleRangeChange.bind(this)
+  }
+
+  handleRangeChange(val) {
+    this.props.onDrag(val, this.props.name)
+  }
+
+  render() {
+    return(
+      <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        marginTop:"30px"
+      }}
+    >
+      <Range
+        values={this.props.values}
+        step={this.props.step || 1}
+        min={this.props.min}
+        max={this.props.max}
+        onChange={this.handleRangeChange}
+     
+        renderTrack={({ props, children }) => (
+          <div
+            {...props}
+            style={{
+              ...props.style,
+              height: '6px',
+              width: '100%',
+              backgroundColor: '#fff'
+            }}
+          >
+            {children}
+          </div>
+          
+        )}
+        renderThumb={({ props }) => (
+         
+          <div
+            {...props}
+            style={{
+              ...props.style,
+              height: '30px',
+              width: '10px',
+              backgroundColor: '#2070de'
+            }}
+          />
+        )}
+      />
+      <output style={{ marginTop: '30px' }} id="output">
+          {this.props.values[0]}
+        </output>
+    </div>
+    )
+  }
+
+  /* if(!props.disabled) {
       //on génère la liste d'options
       let rangeOptList = []
       let actualOpt = parseFloat(props.min)
@@ -82,19 +143,18 @@ function InputRange(props) {
       
         <option>Disabled</option>
       </select>
-  }
+  } */
   
 
  
 
 }
-InputRange.defaultProps = {step:1}
 
 @connect(reducer, actions)
 class Material extends Component {
 
-  //Listes des valeurs possibles pour les éléments
-  formAllowedValues = {
+  //Liste des valeurs possibles pour les éléments select
+  formSelectAllowedValues = {
     //ligne 1
     manufacturer:[
       'Internet License Free (WeSaturate)',
@@ -276,6 +336,24 @@ class Material extends Component {
     ]
   }
 
+  //Liste des valeurs initiales pour les éléments range
+  formRangeAllowedValues = {
+    year:[2005, 2009],
+    fnumber:[5,20],
+    iso:[290,512],
+    exposure:[10,20],
+    jpeg_compression:[70,80],
+    mega_pixels:[10,30],
+    raw_size:[200,3000],
+    focal_length:[100,300],
+    focal_length_eq35:[100,300],
+    crop_factor:[5,7],
+    sensor_size_mm:[8,40.1],
+    pixel_pitch:[5,9],
+    pixel_density:[50,80],
+
+  }
+
   //fonction utilitaire pour convertir les valeurs en un objet utilisable par react-select
   toUsableSelectValue(rawOptList) {
     //console.log(rawOptList)
@@ -292,10 +370,18 @@ class Material extends Component {
   //fonction initialisant le state de tous les éléments du formulaire
   initState() {
     this.state = {}
-    for (const elem_key in this.formAllowedValues) {
-      if (this.formAllowedValues.hasOwnProperty(elem_key)) {
+    //init des select
+    for (const elem_key in this.formSelectAllowedValues) {
+      if (this.formSelectAllowedValues.hasOwnProperty(elem_key)) {
         
-        this.state[elem_key] = this.toUsableSelectValue(this.formAllowedValues[elem_key])
+        this.state[elem_key] = this.toUsableSelectValue(this.formSelectAllowedValues[elem_key])
+      }
+    }
+    //init des sliders
+    for (const elem_key in this.formRangeAllowedValues) {
+      if (this.formRangeAllowedValues.hasOwnProperty(elem_key)) {
+        
+        this.state[elem_key] = this.formRangeAllowedValues[elem_key]
       }
     }
   }
@@ -732,7 +818,7 @@ class Material extends Component {
                           Manufacturer
                         </label>
                         <DynamicSelect 
-                            optList={this.formAllowedValues.manufacturer} 
+                            optList={this.formSelectAllowedValues.manufacturer} 
                             onInput={this.handleInputChange} 
                             name="manufacturer" 
                             value={this.state.manufacturer}/>
@@ -746,7 +832,7 @@ class Material extends Component {
                           Demosaicing algorithm
                         </label>
                         <DynamicSelect 
-                            optList={this.formAllowedValues.demosaicing_algorithm} 
+                            optList={this.formSelectAllowedValues.demosaicing_algorithm} 
                             onInput={this.handleInputChange} 
                             name="demosaicing_algorithm" 
                             value={this.state.demosaicing_algorithm}/>                      </div>
@@ -765,7 +851,7 @@ class Material extends Component {
                           Camera ID
                         </label>
                         <DynamicSelect 
-                            optList={this.formAllowedValues.camera_id} 
+                            optList={this.formSelectAllowedValues.camera_id} 
                             onInput={this.handleInputChange} 
                             name="camera_id" 
                             value={this.state.camera_id}/>
@@ -803,7 +889,12 @@ class Material extends Component {
                         <label for="year">
                           Year
                         </label>
-                        <InputRange name="year" max="2018" min="2003" />
+                        <InputRange 
+                          values={this.state.year}
+                          onDrag={this.handleInputChange} 
+                          name="year" 
+                          max={2018} 
+                          min={2003} />
                       </div>
                   </div>
                 
@@ -814,7 +905,7 @@ class Material extends Component {
                            Sharpenning
                         </label>
                         <DynamicSelect 
-                            optList={this.formAllowedValues.sharpenning} 
+                            optList={this.formSelectAllowedValues.sharpenning} 
                             onInput={this.handleInputChange} 
                             name="sharpenning" 
                             value={this.state.sharpenning}/>
@@ -833,7 +924,7 @@ class Material extends Component {
                           Camera Type
                         </label>
                         <DynamicSelect 
-                            optList={this.formAllowedValues.camera_type} 
+                            optList={this.formSelectAllowedValues.camera_type} 
                             onInput={this.handleInputChange} 
                             name="camera_type" 
                             value={this.state.camera_type}/>
@@ -847,7 +938,7 @@ class Material extends Component {
                           Denoising 
                         </label>
                         <DynamicSelect 
-                            optList={this.formAllowedValues.denoising} 
+                            optList={this.formSelectAllowedValues.denoising} 
                             onInput={this.handleInputChange} 
                             name="denoising" 
                             value={this.state.denoising}/>
@@ -865,7 +956,7 @@ class Material extends Component {
                         <label for="fnumber">
                           Fnumber
                         </label>
-                        <InputRange min="0" max="40" name="fnumber"/>
+                        <InputRange values={this.state.fnumber} min={0} max={40} name="fnumber"/>
                       </div>
                   </div>
                 
@@ -877,17 +968,17 @@ class Material extends Component {
                         </label>
                         <div className="input-group" id="resizing">
                             <DynamicSelect 
-                              optList={this.formAllowedValues.resizing_action} 
+                              optList={this.formSelectAllowedValues.resizing_action} 
                               onInput={this.handleInputChange} 
                               name="resizing_action" 
                               value={this.state.resizing_action}/>
                             <DynamicSelect 
-                              optList={this.formAllowedValues.resizing_type} 
+                              optList={this.formSelectAllowedValues.resizing_type} 
                               onInput={this.handleInputChange} 
                               name="resizing_type" 
                               value={this.state.resizing_type}/>
                             <DynamicSelect 
-                              optList={this.formAllowedValues.resizing_last_number} 
+                              optList={this.formSelectAllowedValues.resizing_last_number} 
                               onInput={this.handleInputChange} 
                               name="resizing_last_number" 
                               value={this.state.resizing_last_number}/>
@@ -905,7 +996,7 @@ class Material extends Component {
                         <label for="iso">
                           ISO
                         </label>
-                        <InputRange disabled min="16" max="51200" name="iso"/>
+                        <InputRange values={this.state.iso} min={16} max={51200} name="iso"/>
                       </div>
                   </div>
                 
@@ -916,7 +1007,7 @@ class Material extends Component {
                           ImageSize  
                         </label>
                         <DynamicSelect 
-                              optList={this.formAllowedValues.image_size} 
+                              optList={this.formSelectAllowedValues.image_size} 
                               onInput={this.handleInputChange} 
                               name="image_size" 
                               value={this.state.image_size}/>
@@ -933,7 +1024,7 @@ class Material extends Component {
                         <label for="exposure">
                           Exposure
                         </label>
-                        <InputRange min="0" max="30" name="exposure"/>
+                        <InputRange values={this.state.exposure} min={0} max={30} name="exposure"/>
                       </div>
                   </div>
                 
@@ -943,7 +1034,7 @@ class Material extends Component {
                         <label for="jpeg_compression">
                           JPEG Compression  
                         </label>
-                        <InputRange min="60" max="100" name="jpeg_compression"/>                      
+                        <InputRange values={this.state.jpeg_compression} min={60} max={100} name="jpeg_compression"/>                      
                       </div>
                   </div>
 
@@ -957,7 +1048,7 @@ class Material extends Component {
                         <label for="mega_pixels">
                           MegaPixels
                         </label>
-                        <InputRange min="0" max="60" name="mega_pixels"/>
+                        <InputRange values={this.state.mega_pixels} min={0} max={60} name="mega_pixels"/>
                       </div>
                   </div>
                 
@@ -975,7 +1066,7 @@ class Material extends Component {
                         <label for="raw_size">
                           RAWsize 
                         </label>
-                        <InputRange disabled min="0" max="12000" name="raw_size"/>
+                        <InputRange values={this.state.raw_size} min={0} max={12000} name="raw_size"/>
                       </div>
                   </div>
                 
@@ -993,7 +1084,7 @@ class Material extends Component {
                         <label for="focal_length">
                          Focal length 
                         </label>
-                        <InputRange min="0" max="400" name="focal_length"/>
+                        <InputRange values={this.state.focal_length} min={0} max={400} name="focal_length"/>
                       </div>
                   </div>
                 
@@ -1011,7 +1102,7 @@ class Material extends Component {
                         <label for="focal_length_eq35">
                         Focal length Eq. 35Mm
                         </label>
-                        <InputRange min="0" max="600" name="focal_length_eq35"/>
+                        <InputRange values={this.state.focal_length_eq35} min={0} max={600} name="focal_length_eq35"/>
                       </div>
                   </div>
 
@@ -1029,7 +1120,7 @@ class Material extends Component {
                         <label for="crop_factor">
                           Crop Factor
                         </label>
-                        <InputRange min="1" max="9" name="crop_factor"/>
+                        <InputRange values={this.state.crop_factor} min={1} max={9} name="crop_factor"/>
                       </div>
                   </div>
 
@@ -1048,7 +1139,7 @@ class Material extends Component {
                           Sensor Size
                         </label>
                         <DynamicSelect 
-                              optList={this.formAllowedValues.sensor_size} 
+                              optList={this.formSelectAllowedValues.sensor_size} 
                               onInput={this.handleInputChange} 
                               name="sensor_size" 
                               value={this.state.sensor_size}/>
@@ -1069,7 +1160,7 @@ class Material extends Component {
                         <label for="sensor_size_mm">
                           Sensor Size (mm)
                         </label>
-                        <InputRange name="sensor_size_mm" step="0.1" min="5" max="43.2"/>
+                        <InputRange values={this.state.sensor_size_mm} name="sensor_size_mm" step={0.1} min={5} max={43.2}/>
                       </div>
                   </div>
 
@@ -1085,7 +1176,7 @@ class Material extends Component {
                         <label for="pixel_pitch">
                           Pixel Pitch (µm)
                         </label>
-                        <InputRange name="pixel_pitch" min="1" max="10"/>
+                        <InputRange values={this.state.pixel_pitch} name="pixel_pitch" min={1} max={10}/>
                       </div>
                   </div>
 
@@ -1101,7 +1192,7 @@ class Material extends Component {
                         <label for="pixel_density">
                           Pixel Density (MP/cm2)
                         </label>
-                        <InputRange name="pixel_density" min="1" max="100"/>
+                        <InputRange values={this.state.pixel_density} name="pixel_density" min={1} max={100}/>
                       </div>
                   </div>
 
@@ -1118,7 +1209,7 @@ class Material extends Component {
                           Sensor Model
                         </label>
                         <DynamicSelect 
-                              optList={this.formAllowedValues.sensor_model} 
+                              optList={this.formSelectAllowedValues.sensor_model} 
                               onInput={this.handleInputChange} 
                               name="sensor_model" 
                               value={this.state.sensor_model}/>
