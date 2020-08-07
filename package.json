@@ -42,7 +42,6 @@
     "nodemailer": "^*",
     "preact": "^10.4.6",
     "react": "^*",
-    "react-rangeslider": "^2.2.0",
     "react-redux": "^7.2.1",
     "react-scrollable-anchor": "^*",
     "react-select": "^3.1.0",
