@@ -44,11 +44,16 @@ class DynamicSelect extends Component {
 
   render() {
     return(
+      <Fragment>
+        <br/>
+        <br/>
         <Select 
           onChange={this.handleChange} 
           value={this.props.value} 
           isMulti 
           options={this.toUsableSelectValue(this.props.optList)} />
+      </Fragment>
+        
      
       /* <select onChange={this.handleChange} multiple={true} class="form-control" id={this.props.name} name={this.props.name}>
         {this.props.optList.map(opt =>
@@ -76,83 +81,22 @@ class InputRange extends Component {
 
   render() {
     return(
-      <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        marginTop:"30px"
-      }}
-    >
-      <Range
-        values={this.props.values}
-        step={this.props.step || 1}
-        min={this.props.min}
-        max={this.props.max}
-        onChange={this.handleRangeChange}
-     
-        renderTrack={({ props, children }) => (
-            <div
-            onMouseDown={props.onMouseDown}
-            onTouchStart={props.onTouchStart}
-            style={{
-              ...props.style,
-              height: '36px',
-              display: 'flex',
-              width: '100%'
-            }}
-          >
-            <div
-              ref={props.ref}
-              style={{
-                height: '5px',
-                width: '100%',
-                borderRadius: '4px',
-                background: getTrackBackground({
-                  values: this.props.values,
-                  colors: ['#ccc', '#548BF4', '#ccc'],
-                  min: this.props.min,
-                  max: this.props.max
-                }),
-                alignSelf: 'center'
-              }}
-            >
-            {children}
-            </div>
-        </div>
-          
-        )}
-        renderThumb={({ props, isDragged }) => (
-         
-            <div
-            {...props}
-            style={{
-              ...props.style,
-              height: '42px',
-              width: '42px',
-              borderRadius: '4px',
-              backgroundColor: '#FFF',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              boxShadow: '0px 2px 6px #AAA'
-            }}
-          >
-            <div
-              style={{
-                height: '16px',
-                width: '5px',
-                backgroundColor: isDragged ? '#548BF4' : '#CCC'
-              }}
-            />
-          </div>
-        )}
-      />
-      <output style={{ marginTop: '30px' }} id="output">
-{this.props.values[0].toFixed(1)} - {this.props.values[1].toFixed(1)}
-        </output>
-    </div>
+      <Fragment>
+        <br/>
+        <br/>
+        <Rheostat
+          min={this.props.min}
+          max={this.props.max}
+          values={this.props.values}
+          snap={true}
+          onValuesUpdated={this.handleRangeChange}
+        />
+        <br/>
+        <p>{this.props.values[0]} - {this.props.values[1]}</p>
+      </Fragment>
+      
     )
+  
   }
 
   /* if(!props.disabled) {
@@ -310,8 +254,9 @@ class DbSorter extends Component {
                               <label for="year">
                                 Year
                               </label>
-                              <Rheostat
-                                onChange={console.log()}
+                              <InputRange
+                                name="year"
+                                onDrag={this.handleInputChange}
                                 values={this.state.year}
                                 max={2018} 
                                 min={2003} />
@@ -376,7 +321,12 @@ class DbSorter extends Component {
                               <label for="fnumber">
                                 Fnumber
                               </label>
-                              <InputRange values={this.state.fnumber} min={0} max={40} name="fnumber"/>
+                              <InputRange 
+                                values={this.state.fnumber} 
+                                min={0} 
+                                max={40} 
+                                onDrag={this.handleInputChange}
+                                name="fnumber"/>
                             </div>
                         </div>
                       
@@ -416,7 +366,12 @@ class DbSorter extends Component {
                               <label for="iso">
                                 ISO
                               </label>
-                              <InputRange values={this.state.iso} min={16} max={51200} name="iso"/>
+                              <InputRange 
+                                values={this.state.iso}
+                                onDrag={this.handleInputChange} 
+                                min={16} 
+                                max={51200} 
+                                name="iso"/>
                             </div>
                         </div>
                       
@@ -444,7 +399,7 @@ class DbSorter extends Component {
                               <label for="exposure">
                                 Exposure
                               </label>
-                              <InputRange values={this.state.exposure} min={0} max={30} name="exposure"/>
+                              <InputRange onDrag={this.handleInputChange} values={this.state.exposure} min={0} max={30} name="exposure"/>
                             </div>
                         </div>
                       
@@ -454,7 +409,7 @@ class DbSorter extends Component {
                               <label for="jpeg_compression">
                                 JPEG Compression  
                               </label>
-                              <InputRange values={this.state.jpeg_compression} min={60} max={100} name="jpeg_compression"/>                      
+                              <InputRange onDrag={this.handleInputChange} values={this.state.jpeg_compression} min={60} max={100} name="jpeg_compression"/>                      
                             </div>
                         </div>
       
@@ -468,7 +423,7 @@ class DbSorter extends Component {
                               <label for="mega_pixels">
                                 MegaPixels
                               </label>
-                              <InputRange values={this.state.mega_pixels} min={0} max={60} name="mega_pixels"/>
+                              <InputRange onDrag={this.handleInputChange} values={this.state.mega_pixels} min={0} max={60} name="mega_pixels"/>
                             </div>
                         </div>
                       
@@ -486,7 +441,7 @@ class DbSorter extends Component {
                               <label for="raw_size">
                                 RAWsize 
                               </label>
-                              <InputRange values={this.state.raw_size} min={0} max={12000} name="raw_size"/>
+                              <InputRange onDrag={this.handleInputChange} values={this.state.raw_size} min={0} max={12000} name="raw_size"/>
                             </div>
                         </div>
                       
@@ -504,7 +459,7 @@ class DbSorter extends Component {
                               <label for="focal_length">
                                Focal length 
                               </label>
-                              <InputRange values={this.state.focal_length} min={0} max={400} name="focal_length"/>
+                              <InputRange onDrag={this.handleInputChange} values={this.state.focal_length} min={0} max={400} name="focal_length"/>
                             </div>
                         </div>
                       
@@ -522,7 +477,7 @@ class DbSorter extends Component {
                               <label for="focal_length_eq35">
                               Focal length Eq. 35Mm
                               </label>
-                              <InputRange values={this.state.focal_length_eq35} min={0} max={600} name="focal_length_eq35"/>
+                              <InputRange onDrag={this.handleInputChange} values={this.state.focal_length_eq35} min={0} max={600} name="focal_length_eq35"/>
                             </div>
                         </div>
       
@@ -540,7 +495,7 @@ class DbSorter extends Component {
                               <label for="crop_factor">
                                 Crop Factor
                               </label>
-                              <InputRange values={this.state.crop_factor} min={1} max={9} name="crop_factor"/>
+                              <InputRange onDrag={this.handleInputChange} values={this.state.crop_factor} min={1} max={9} name="crop_factor"/>
                             </div>
                         </div>
       
@@ -580,7 +535,7 @@ class DbSorter extends Component {
                               <label for="sensor_size_mm">
                                 Sensor Size (mm)
                               </label>
-                              <InputRange values={this.state.sensor_size_mm} name="sensor_size_mm" step={0.1} min={5} max={43.2}/>
+                              <InputRange onDrag={this.handleInputChange} values={this.state.sensor_size_mm} name="sensor_size_mm" step={0.1} min={5} max={43.2}/>
                             </div>
                         </div>
       
@@ -596,7 +551,7 @@ class DbSorter extends Component {
                               <label for="pixel_pitch">
                                 Pixel Pitch (µm)
                               </label>
-                              <InputRange values={this.state.pixel_pitch} name="pixel_pitch" min={1} max={10}/>
+                              <InputRange onDrag={this.handleInputChange} values={this.state.pixel_pitch} name="pixel_pitch" min={1} max={10}/>
                             </div>
                         </div>
       
@@ -612,7 +567,7 @@ class DbSorter extends Component {
                               <label for="pixel_density">
                                 Pixel Density (MP/cm2)
                               </label>
-                              <InputRange values={this.state.pixel_density} name="pixel_density" min={1} max={100}/>
+                              <InputRange onDrag={this.handleInputChange} values={this.state.pixel_density} name="pixel_density" min={1} max={100}/>
                             </div>
                         </div>
       
@@ -894,8 +849,8 @@ class DbSorter extends Component {
 
   //fonction qui gère la sélection de chaque élément
   handleInputChange(newValue, name) {
-    //console.log("MaterialComponent value", newValue)
-    this.setState({ [name]: newValue })
+    //console.log("MaterialComponent value", newValue.values)
+    this.setState({ [name]: newValue.values })
   }
 }
 
