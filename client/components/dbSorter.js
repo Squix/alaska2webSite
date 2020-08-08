@@ -10,6 +10,8 @@ import * as actions from "../actions";
 //import des composants d'UI
 import Select from "react-select";
 import {Range, getTrackBackground} from 'react-range'
+import 'rheostat/initialize';
+import Rheostat from 'rheostat'
 
 /*
   Composant pour afficher une liste déroulante alimentée par un tableau
@@ -90,34 +92,64 @@ class InputRange extends Component {
         onChange={this.handleRangeChange}
      
         renderTrack={({ props, children }) => (
-          <div
-            {...props}
+            <div
+            onMouseDown={props.onMouseDown}
+            onTouchStart={props.onTouchStart}
             style={{
               ...props.style,
-              height: '6px',
-              width: '100%',
-              backgroundColor: '#fff'
+              height: '36px',
+              display: 'flex',
+              width: '100%'
             }}
           >
+            <div
+              ref={props.ref}
+              style={{
+                height: '5px',
+                width: '100%',
+                borderRadius: '4px',
+                background: getTrackBackground({
+                  values: this.props.values,
+                  colors: ['#ccc', '#548BF4', '#ccc'],
+                  min: this.props.min,
+                  max: this.props.max
+                }),
+                alignSelf: 'center'
+              }}
+            >
             {children}
-          </div>
+            </div>
+        </div>
           
         )}
-        renderThumb={({ props }) => (
+        renderThumb={({ props, isDragged }) => (
          
-          <div
+            <div
             {...props}
             style={{
               ...props.style,
-              height: '30px',
-              width: '10px',
-              backgroundColor: '#2070de'
+              height: '42px',
+              width: '42px',
+              borderRadius: '4px',
+              backgroundColor: '#FFF',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              boxShadow: '0px 2px 6px #AAA'
             }}
-          />
+          >
+            <div
+              style={{
+                height: '16px',
+                width: '5px',
+                backgroundColor: isDragged ? '#548BF4' : '#CCC'
+              }}
+            />
+          </div>
         )}
       />
       <output style={{ marginTop: '30px' }} id="output">
-          {this.props.values[0]}
+{this.props.values[0].toFixed(1)} - {this.props.values[1].toFixed(1)}
         </output>
     </div>
     )
@@ -278,10 +310,9 @@ class DbSorter extends Component {
                               <label for="year">
                                 Year
                               </label>
-                              <InputRange 
+                              <Rheostat
+                                onChange={console.log()}
                                 values={this.state.year}
-                                onDrag={this.handleInputChange} 
-                                name="year" 
                                 max={2018} 
                                 min={2003} />
                             </div>
