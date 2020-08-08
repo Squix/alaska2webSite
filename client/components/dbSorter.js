@@ -594,6 +594,9 @@ class DbSorter extends Component {
                         <div class="col"> </div>
       
                       </div>
+
+                        <button type="submit" className="btn btn-default btn-lg">Trier</button>
+
                     </form>
                    
                 </div>
@@ -843,8 +846,9 @@ class DbSorter extends Component {
   }
 
   //fonction pour gérer l'envoi du formulaire
-  onChoiceSubmit() {
-
+  onChoiceSubmit(e) {
+    e.preventDefault()
+    console.log("submitted")
   }
 
   //fonction qui gère la sélection de chaque élément
