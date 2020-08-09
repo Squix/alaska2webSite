@@ -22,6 +22,8 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
 
 3 - TRAVAIL EFFECTUÉ
     Création d'un formulaire reprenant toutes les valeurs données
+        Composant InputRange pour sélectionner des plages de données
+        Composant DynamicSelect pour sélectionner parmi une liste de critères
 
 4 - PROBLÈMES RECONTRÉS
     Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne)
