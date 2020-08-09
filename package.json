@@ -39,6 +39,7 @@
     "mocha": "^*",
     "morgan": "^*",
     "mysql2": "^*",
+    "node-csv-query": "^0.1.0",
     "nodemailer": "^*",
     "preact": "^10.4.6",
     "react": "^*",
