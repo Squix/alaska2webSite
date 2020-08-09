@@ -853,8 +853,18 @@ class DbSorter extends Component {
 
   //fonction qui gère la sélection de chaque élément
   handleInputChange(newValue, name) {
-    //console.log("MaterialComponent value", newValue.values)
-    this.setState({ [name]: newValue.values })
+    //console.log("MaterialComponent value", newValue)
+    //on vérifie à quel control on a à faire
+    if(Array.isArray(newValue.values)) {
+      console.log("c'est un input range")
+      //alors c'est un input range
+      console.log("values", newValue.values)
+      this.setState({ [name]: newValue.values })
+    } else {
+      console.log("c'est un dynamicSelect")
+      this.setState({ [name]: newValue })
+    }
+    
   }
 }
 
