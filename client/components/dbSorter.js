@@ -856,12 +856,12 @@ class DbSorter extends Component {
     //console.log("MaterialComponent value", newValue)
     //on vérifie à quel control on a à faire
     if(Array.isArray(newValue.values)) {
-      console.log("c'est un input range")
+      //console.log("c'est un input range")
       //alors c'est un input range
-      console.log("values", newValue.values)
+      //console.log("values", newValue.values)
       this.setState({ [name]: newValue.values })
     } else {
-      console.log("c'est un dynamicSelect")
+      //console.log("c'est un dynamicSelect")
       this.setState({ [name]: newValue })
     }
     

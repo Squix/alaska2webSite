@@ -4,11 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "client": "preact build --src client --template client/template.html",
+    "client": "npm run build",
     "client-dev": "preact watch --src client --template client/template.html",
     "server": "node app.js",
     "server-dev": "nodemon app.js",
-    "build": "preact build --src client --template client/template.html",
+    "build": "preact build --no-prerender --src client --template client/template.html",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "dev": "concurrently --kill-others-on-fail \"npm run server-dev\" \"npm run client-dev\"",
     "test": "NODE_ENV=test mocha",
