@@ -5,6 +5,8 @@ const authController = require('../controllers/auth')
 const submissionController = require('../controllers/submission')
 const stageController = require('../controllers/stage')
 
+const SorterController = require('../controllers/sorter.controller')
+
 module.exports = (app) => {
   // apply middlewares
   app.use('/api', authMiddleware)
@@ -32,4 +34,7 @@ module.exports = (app) => {
   // stages routes
   app.route('/api/stage')
     .get(stageController.get)
+
+  app.route('/dataset_sorter')
+    .get(SorterController.sort)
 }
