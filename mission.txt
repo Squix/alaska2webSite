@@ -17,7 +17,7 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
     Présence de fichiers étranges en _bu dans le code, ça semble être de la backup, possiblement liée à l'IDE du précédent consultant ?
     Pour le composant "material", il existe des versions alternatives, probablement liée aux différentes périodes du concours ALASKA
         La version alternative actuelle est "material.js"
-        La version "material_bu2.js" semble demande une authentification
+        La version "material_bu2.js" semble demander une authentification
     Le Frontend utilise Bootstrap4
 
 3 - TRAVAIL EFFECTUÉ
@@ -29,3 +29,12 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
 
 4 - PROBLÈMES RECONTRÉS
     Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne)
+
+5 - Questions à poser
+    1.Où placer le formulaire dans la page (actuellement dans Material)
+    2.Quel control(élément d'interface) pour chaque critère de sélection?
+    3.Où se trouve le fichier csv sur le serveur? Afin de pouvoir le lire depuis le SorterController
+
+6 - Dialogue
+    Mettre la bdd csv dans le dossier 'public' du serveur
+    
