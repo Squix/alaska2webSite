@@ -27,6 +27,9 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
         Composant DynamicSelect pour sélectionner parmi une liste de critères
     Création d'un endpoint du serveur pour trier le fichier csv de la BDD
         Controller SorterController
+        Fichier csv de la BDD placé dans server/public
+        Package node-csv-query installé pour la communication avec ce fichier
+        Création d'un script pour convertir la BDD csv en fichier utilisable par node-csv-query
 
 4 - PROBLÈMES RECONTRÉS
     Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne)

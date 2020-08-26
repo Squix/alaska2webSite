@@ -18,6 +18,9 @@ class SorterController {
         let records = await db.find({
             "2-Manufacturer":"Google"
         })
+        records = records.map(function(record) {
+            return record["1-Name"];
+          })
         res.json(records)
     }
 }
