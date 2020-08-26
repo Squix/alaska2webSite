@@ -13,6 +13,7 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
     ReactJS semble complémenté/supplanté par PreactJS
     On peut lancer uniquement le frontend en mode dev pour le modifier sereinement avec "npm run client-dev"
         Attention, avant cela le serveur doit aussi être lancé pour éviter une erreur SSL (npm run server)
+    Lorsqu'on lance le serveur, il faut impérativement utiliser le port 8443 (sinon erreur SSL)
     PreactJS utilise Redux, "PreactRedux"
     Présence de fichiers étranges en _bu dans le code, ça semble être de la backup, possiblement liée à l'IDE du précédent consultant ?
     Pour le composant "material", il existe des versions alternatives, probablement liée aux différentes périodes du concours ALASKA
@@ -37,4 +38,6 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
 
 6 - Dialogue
     Mettre la bdd csv dans le dossier 'public' du serveur
+    Retirer les cases pour chercher selon tel ou tel critère, préférer la recherche par inclusion
+        Cad on trie uniquement la BDD selon les paramètres modifiés par l'utilisateur
     
