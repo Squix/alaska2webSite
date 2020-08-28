@@ -2,14 +2,13 @@
     Composant présentant une interface permettant de faire le tri dans la db
 */
 
-import { h, Component, Fragment } from "preact";
+import { Component, Fragment } from "preact";
 import { connect } from "react-redux";
 import reducer from "../reducer";
 import * as actions from "../actions";
 
 //import des composants d'UI
 import Select from "react-select";
-import {Range, getTrackBackground} from 'react-range'
 import 'rheostat/initialize';
 import Rheostat from 'rheostat'
 
@@ -40,6 +39,7 @@ class DynamicSelect extends Component {
     //console.log("DynamicSelect value", selectedOptions)
     //on renvoie les nouvelles options ainsi que le nom du control
     this.props.onInput(selectedOptions, this.props.name)
+    
   }
 
   render() {
@@ -151,28 +151,7 @@ class DbSorter extends Component {
                           <h3>Image processing</h3>
                         </div>
                       </div>
-                      {/* Cases de sélection */}
-                      <div className="form-row">
-                        <div class="col">
-                            {/* Partie acquisition */}
-                            <div class="form-check">
-                              <input type="checkbox" class="form-check-input" name="useAcquisitionCriteria" id="useAcquisitionCriteria"/>
-                              <label for="useAcquisitionCriteria" class="form-check-label">
-                                Chercher selon les critères d'acquisition
-                              </label>
-                            </div>
-                        </div>
-                      
-                        <div className="col">
-                          {/* Partie traitement */}
-                          <div class="form-check">
-                              <input type="checkbox" class="form-check-input" name="useProcessingCriteria" id="useProcessingCriteria"/>
-                              <label for="useProcessingCriteria" class="form-check-label">
-                                Chercher selon les critères de traitement
-                              </label>
-                            </div>
-                        </div>
-                      </div>
+
                       {/* Ligne 1 */}
                       <div class="form-row">
       
@@ -837,18 +816,56 @@ class DbSorter extends Component {
         this.state[elem_key] = this.formRangeAllowedValues[elem_key]
       }
     }
+    //init du tableau des éléments modifiés (utilisés pour le tri)
+    this.state.sortingCriteria = []
   }
 
   constructor() {
     super()
     this.initState()
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.onChoiceSubmit = this.onChoiceSubmit.bind(this)
   }
 
   //fonction pour gérer l'envoi du formulaire
-  onChoiceSubmit(e) {
+  async onChoiceSubmit(e) {
     e.preventDefault()
-    console.log("submitted")
+    //pour tous les éléments qui ont été modifiés, on les ajoute à l'url du filtre serveur
+    console.log(this.state.sortingCriteria)
+    let url_params = ""
+    let transformed_criteria_value = ""
+    for (const criteria of this.state.sortingCriteria) {
+
+      //si le tableau est vide, on se barre
+      if(!this.state[criteria].length) {
+        continue
+      }
+      //on transforme le tableau en chaîne de caractère
+      transformed_criteria_value = ""
+      //pour chaque objet du tableau, on ajoute les valeurs au paramètre
+      for (const select_object of this.state[criteria]) {
+        transformed_criteria_value += (select_object.value || select_object) + ','
+      }
+    
+      //on supprime le dernier caractère (un , en trop)
+      transformed_criteria_value = transformed_criteria_value.slice(0, -1); 
+
+      //ajout à la l'url
+      url_params += criteria+"="+transformed_criteria_value+"&"
+
+    }
+
+    //on supprime le dernier caractère (un & en trop)
+    url_params = url_params.slice(0, -1); 
+
+    //si ya pas de paramètres, on a pas à trier
+    if(!url_params) {
+      alert('Aucun tri à faire')
+      return
+    }
+
+    const res = await fetch('/dataset_sorter?'+url_params)
+    console.log(res)
   }
 
   //fonction qui gère la sélection de chaque élément
@@ -864,7 +881,13 @@ class DbSorter extends Component {
       //console.log("c'est un dynamicSelect")
       this.setState({ [name]: newValue })
     }
-    
+
+    //on ajoute le control aux critère 
+    //s'il n'est pas déjà présent dans les critères de filtre
+    if(!this.state.sortingCriteria.includes(name)) {
+      //on l'ajoute
+      this.state.sortingCriteria.push(name)
+    }
   }
 }
 
