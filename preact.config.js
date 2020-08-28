@@ -1,3 +1,5 @@
+import asyncPlugin from 'preact-cli-plugin-fast-async';
+
 export default (config, env, helpers) => {
     console.log('Custom config Webpack - Compatibilité React')
     //ajout de la compatibilité Preact-React
@@ -5,5 +7,5 @@ export default (config, env, helpers) => {
     config.resolve.alias["react-dom/test-utils"] = "preact/test-utils"
     config.resolve.alias["react-dom"] = "preact/compat"
 
-
+    asyncPlugin(config);
 }
