@@ -43,7 +43,6 @@
     "nodemailer": "^*",
     "preact": "^10.4.6",
     "react": "^*",
-    "react-range": "^1.6.7",
     "react-redux": "^7.2.1",
     "react-scrollable-anchor": "^*",
     "react-select": "^3.1.0",
