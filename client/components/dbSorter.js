@@ -576,6 +576,20 @@ class DbSorter extends Component {
 
                         <button type="submit" className="btn btn-default btn-lg">Trier</button>
 
+                        { this.state.showResults ? 
+                        
+                        <div class="card mt-4 h-25  bg-primary" id="resultBox" >
+                          <div className="card-body">
+                            {this.state.sortResults.map(function (img_name) {
+                              return(
+                              <p>{img_name}</p>
+                              )
+                            })}
+                          </div>
+                        </div>
+
+                        : null}
+
                     </form>
                    
                 </div>
@@ -830,6 +844,10 @@ class DbSorter extends Component {
     }
     //init du tableau des éléments modifiés (utilisés pour le tri)
     this.state.sortingCriteria = []
+    //on cache la boîte des résultats au début
+    this.state.showResults = false
+    //on init à aucun résultats au début
+    this.state.sortResults = {}
   }
 
   constructor() {
@@ -891,11 +909,17 @@ class DbSorter extends Component {
 
     fetch('/dataset_sorter?'+url_params).then(response => {
       response.ok ?
-        response.json().then(json => { console.log(json) })
+        response.json().then(json => { 
+          //on affiche la boîte des résultats
+          this.setState({"showResults":true, sortResults:json})
+          console.log(json) 
+
+        })
         :
         console.log(response)
       
     })
+
  
   }
 

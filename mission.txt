@@ -26,6 +26,8 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
     Création d'un formulaire reprenant toutes les valeurs données
         Composant InputRange pour sélectionner des plages de données
         Composant DynamicSelect pour sélectionner parmi une liste de critères
+        Système capable de détecter la modification d'un critère et de créer une jolie URL à envoyer au serveur
+        Affichage des résultats en dessous du formulaire
     Création d'un endpoint du serveur pour trier le fichier csv de la BDD
         Controller SorterController
         Fichier csv de la BDD placé dans server/public
