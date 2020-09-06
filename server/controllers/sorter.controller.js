@@ -28,7 +28,6 @@ class SorterController {
         ["pixel_density","18-Pixel Density (MP/cm2)","range"],
         ["sensor_model","19-Sensor Model"],
         ["demosaicing_algorithm","20-Demosaicing algorithm"],
-        ["usm|den_order","21-USM / DEN order"],
         ["sharpenning","22-Sharpenning"],
         ["denoising","23-Denoising"],
         ["resizing","24-Resizing"],
@@ -55,6 +54,23 @@ class SorterController {
                     criteriaObject[criteria[1]].type = "range"
                 }
             }
+        }
+
+        //on gère les checkboxes
+        if(req.query["usm_on"] || req.query["usm_off"]) {
+           
+            let usm_array = []
+            if(req.query["usm_on"]) {
+                usm_array.push("1")
+            }
+            if(req.query["usm_off"]) {
+                usm_array.push("0")
+            }
+
+            criteriaObject["21-USM / DEN order"] = {
+                supplied_value:usm_array.join(',')
+            }
+
         }
 
         console.log(criteriaObject)

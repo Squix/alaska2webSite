@@ -208,14 +208,14 @@ class DbSorter extends Component {
                               <label htmlFor="">USM / DEN order</label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="radio" name="usm|den_order" id="usm_after_den_choice" value="0" checked/>
-                              <label for="usm_after_den_choice" class="form-check-label">
+                              <input onClick={() => this.handleCheckboxChange("usm_off")} class="form-check-input" type="checkbox" name="usm_off" id="usm_off" checked={this.state["usm_off"]}/>
+                              <label for="usm_off" class="form-check-label">
                                 USM after DEN
                               </label>
                             </div>
                             <div class="form-check">
-                              <input class="form-check-input" type="radio" name="usm|den_order" id="usm_before_den_choice" value="1" />
-                              <label for="usm_after_den_choice" class="form-check-label">
+                              <input onClick={() => this.handleCheckboxChange("usm_on")} class="form-check-input" type="checkbox" name="usm_on" id="usm_on" checked={this.state["usm_on"]}/>
+                              <label for="usm_on" class="form-check-label">
                                 USM before DEN
                               </label>
                             </div>
@@ -786,6 +786,11 @@ class DbSorter extends Component {
 
   }
 
+  formChoiceAllowedValues = {
+    "usm_off":true,
+    "usm_on":true
+  }
+
   //fonction utilitaire pour convertir les valeurs en un objet utilisable par react-select
   toUsableSelectValue(rawOptList) {
     //console.log(rawOptList)
@@ -816,6 +821,13 @@ class DbSorter extends Component {
         this.state[elem_key] = this.formRangeAllowedValues[elem_key]
       }
     }
+    //init des checkboxes
+    for (const elem_key in this.formChoiceAllowedValues) {
+      if (this.formChoiceAllowedValues.hasOwnProperty(elem_key)) {
+        
+        this.state[elem_key] = this.formChoiceAllowedValues[elem_key]
+      }
+    }
     //init du tableau des éléments modifiés (utilisés pour le tri)
     this.state.sortingCriteria = []
   }
@@ -824,6 +836,7 @@ class DbSorter extends Component {
     super()
     this.initState()
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
     this.onChoiceSubmit = this.onChoiceSubmit.bind(this)
   }
 
@@ -836,22 +849,34 @@ class DbSorter extends Component {
     let transformed_criteria_value = ""
     for (const criteria of this.state.sortingCriteria) {
 
-      //si le tableau est vide, on se barre
-      if(!this.state[criteria].length) {
-        continue
+      //gestion des checkboxes
+      if(typeof this.state[criteria] === "boolean") {
+      
+        //ajout à la l'url
+        url_params += criteria+"=true"+"&"
       }
-      //on transforme le tableau en chaîne de caractère
-      transformed_criteria_value = ""
-      //pour chaque objet du tableau, on ajoute les valeurs au paramètre
-      for (const select_object of this.state[criteria]) {
-        transformed_criteria_value += (select_object.value || select_object) + ','
-      }
-    
-      //on supprime le dernier caractère (un , en trop)
-      transformed_criteria_value = transformed_criteria_value.slice(0, -1); 
+      //gestion des InputRange et DynamicSelect
+      else if(typeof this.state[criteria] === "object") {
 
-      //ajout à la l'url
-      url_params += criteria+"="+transformed_criteria_value+"&"
+        //si le tableau est vide, on se barre
+        if(!this.state[criteria].length) {
+          continue
+        }
+        //on transforme le tableau en chaîne de caractère
+        transformed_criteria_value = ""
+        //pour chaque objet du tableau, on ajoute les valeurs au paramètre
+        for (const select_object of this.state[criteria]) {
+          transformed_criteria_value += (select_object.value || select_object) + ','
+        }
+      
+        //on supprime le dernier caractère (un , en trop)
+        transformed_criteria_value = transformed_criteria_value.slice(0, -1); 
+
+        //ajout à la l'url
+        url_params += criteria+"="+transformed_criteria_value+"&"
+
+        }
+      
 
     }
 
@@ -889,6 +914,20 @@ class DbSorter extends Component {
       this.state.sortingCriteria.push(name)
     }
   }
+
+  handleCheckboxChange(control_name) {
+    let newVal = !this.state[control_name]
+    this.setState({ [control_name]: newVal })
+
+    //on ajoute le control aux critère 
+    //s'il n'est pas déjà présent dans les critères de filtre
+    if(!this.state.sortingCriteria.includes(control_name)) {
+      //on l'ajoute
+      this.state.sortingCriteria.push(control_name)
+    }
+
+  }
+
 }
 
 export default DbSorter;
