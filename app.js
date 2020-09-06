@@ -43,15 +43,12 @@ routes(app)
 var httpServer = http.createServer(app);
 
 httpServer.on('request', function(req, res) {
-    if (req.url == '/') { 
-      res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-      res.end();
-    } else {
+    
       console.log('HTTP REQUEST');
       console.log(req.url);
       console.log(req.method);
 //      console.log(req.headers);
-    }
+    
 });
 
 var httpsServer=https.createServer(options, app)
