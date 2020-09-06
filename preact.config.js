@@ -8,4 +8,5 @@ export default (config, env, helpers) => {
     config.resolve.alias["react-dom"] = "preact/compat"
 
     asyncPlugin(config);
+
 }

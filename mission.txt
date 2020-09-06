@@ -20,6 +20,7 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
         La version alternative actuelle est "material.js"
         La version "material_bu2.js" semble demander une authentification
     Le Frontend utilise Bootstrap4
+    Le script npm "start" permet de lancer en même temps le serveur et le client, mais SURTOUT, de les relier ensemble par je ne sais quelle magie vaudoo !
 
 3 - TRAVAIL EFFECTUÉ
     Création d'un formulaire reprenant toutes les valeurs données

@@ -889,8 +889,14 @@ class DbSorter extends Component {
       return
     }
 
-    const res = await fetch('/dataset_sorter?'+url_params)
-    console.log(res)
+    fetch('/dataset_sorter?'+url_params).then(response => {
+      response.ok ?
+        response.json().then(json => { console.log(json) })
+        :
+        console.log(response)
+      
+    })
+ 
   }
 
   //fonction qui gère la sélection de chaque élément
