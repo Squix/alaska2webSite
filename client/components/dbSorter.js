@@ -139,7 +139,7 @@ class DbSorter extends Component {
                   
         {/* Partie Interface de recherche */}
                    <h2>iMAGES DATASET</h2>
-                    <form onSubmit={this.onChoiceSubmit}>
+                    <form onSubmit={this.onChoiceSubmit} onReset={this.onFormReset}>
                       {/* Titres de section */}
                       <div class="row">
                         {/* Partie acquisition */}
@@ -576,6 +576,7 @@ class DbSorter extends Component {
 
                         <button type="submit" className="btn btn-default btn-lg">Trier</button>
 
+                        <button type="reset" className="ml-4 btn btn-default btn-lg">Reset</button>
 
                     </form>
 
@@ -853,6 +854,8 @@ class DbSorter extends Component {
     this.state.showResults = false
     //on init à aucun résultats au début
     this.state.sortResults = {}
+    // on préserve le state initial pour reset
+    this.baseState = this.state 
   }
 
   constructor() {
@@ -861,6 +864,11 @@ class DbSorter extends Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
     this.onChoiceSubmit = this.onChoiceSubmit.bind(this)
+  }
+
+  //fonction pour reset le formulaire
+  onFormReset = () => {
+    this.setState(this.baseState)
   }
 
   //fonction pour gérer l'envoi du formulaire
