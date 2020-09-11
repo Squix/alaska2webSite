@@ -576,21 +576,28 @@ class DbSorter extends Component {
 
                         <button type="submit" className="btn btn-default btn-lg">Trier</button>
 
-                        { this.state.showResults ? 
+                        <button onClick={this.initState()} type="reset" className="btn btn-default btn-lg">Reset</button>
+
+                    </form>
+
+                    { this.state.showResults ? 
                         
                         <div class="card mt-4 h-25  bg-primary" id="resultBox" >
                           <div className="card-body">
-                            {this.state.sortResults.map(function (img_name) {
-                              return(
-                              <p>{img_name}</p>
-                              )
-                            })}
+                            {this.state.sortResults.length ?
+                              this.state.sortResults.map(function (img_name) {
+                                return(
+                                <p>{img_name}</p>
+                                )
+                              })
+                            : "Aucun résultat"
+                            }
                           </div>
                         </div>
 
                         : null}
 
-                    </form>
+                        <p>Corucou</p>
                    
                 </div>
               </section>

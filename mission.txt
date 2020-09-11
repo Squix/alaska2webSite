@@ -37,13 +37,11 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
 4 - PROBLÈMES RECONTRÉS
     Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne)
 
-5 - Questions à poser
-    1.Où placer le formulaire dans la page (actuellement dans Material)
-    2.Quel control(élément d'interface) pour chaque critère de sélection?
-    3.Où se trouve le fichier csv sur le serveur? Afin de pouvoir le lire depuis le SorterController
-
-6 - Dialogue
-    Mettre la bdd csv dans le dossier 'public' du serveur
-    Retirer les cases pour chercher selon tel ou tel critère, préférer la recherche par inclusion
-        Cad on trie uniquement la BDD selon les paramètres modifiés par l'utilisateur
-    
+5 - À faire
+    Fonctionnalité par cacher par défaut chaque élément d'interface
+    Checkbox en haut de Processing pour désactiver toute la colonne d'un coup (activée par défaut) "Je veux les images RAW"
+    Ajouter une checkbox au dessus de jpeg compression pour désactiver totalement la compression
+    Règles pour la modif d'extesnions :
+        Si on choisis le RAW sans compression, on garde ce qu'il y a dans le CSV
+        Si pas RAW et pas de compression, c'est .ppm
+        Si raw et compression, .jpg
