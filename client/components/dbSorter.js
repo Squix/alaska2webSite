@@ -597,7 +597,7 @@ class DbSorter extends Component {
 
                         : null}
 
-                        <p>Corucou</p>
+                        <p>Cucou</p>
                    
                 </div>
               </section>

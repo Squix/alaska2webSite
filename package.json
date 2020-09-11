@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "client": "npm run build",
-    "client-dev": "preact watch --src client --template client/template.html",
+    "client-dev": "watch \"npm run client\" client",
     "server": "node app.js",
     "server-dev": "nodemon app.js",
     "build": "preact build --no-prerender --src client --template client/template.html",
@@ -56,6 +56,7 @@
   },
   "devDependencies": {
     "nodemon": "^*",
-    "preact-cli": "^*"
+    "preact-cli": "^*",
+    "watch": "^1.0.2"
   }
 }
