@@ -576,7 +576,6 @@ class DbSorter extends Component {
 
                         <button type="submit" className="btn btn-default btn-lg">Trier</button>
 
-                        <button onClick={this.initState()} type="reset" className="btn btn-default btn-lg">Reset</button>
 
                     </form>
 
@@ -584,6 +583,7 @@ class DbSorter extends Component {
                         
                         <div class="card mt-4 h-25  bg-primary" id="resultBox" >
                           <div className="card-body">
+                            
                             {this.state.sortResults.length ?
                               this.state.sortResults.map(function (img_name) {
                                 return(
@@ -596,8 +596,6 @@ class DbSorter extends Component {
                         </div>
 
                         : null}
-
-                        <p>Cucou</p>
                    
                 </div>
               </section>
@@ -918,7 +916,10 @@ class DbSorter extends Component {
       response.ok ?
         response.json().then(json => { 
           //on affiche la boîte des résultats
-          this.setState({"showResults":true, sortResults:json})
+          this.setState({
+            "showResults":true,
+            "sortResults":json
+          })
           console.log(json) 
 
         })

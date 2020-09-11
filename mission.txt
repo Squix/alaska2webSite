@@ -33,6 +33,8 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
         Fichier csv de la BDD placé dans server/public
         Package node-csv-query installé pour la communication avec ce fichier
         Création d'un script pour convertir la BDD csv en fichier utilisable par node-csv-query
+    Ajout d'un système approprié pour dev sereinement sur le serveur et le client
+        Modification du script npm client-dev pour utiliser watch et preact build (on n'a pas besoin du serv intégré de preact watch)
 
 4 - PROBLÈMES RECONTRÉS
     Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne)
