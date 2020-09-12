@@ -28,6 +28,8 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
         Composant DynamicSelect pour sélectionner parmi une liste de critères
         Système capable de détecter la modification d'un critère et de créer une jolie URL à envoyer au serveur
         Affichage des résultats en dessous du formulaire
+        Système de reset du formulaire
+        Fonctionnalité par cacher par défaut chaque élément d'interface, et changer leur visibilité en un clic
     Création d'un endpoint du serveur pour trier le fichier csv de la BDD
         Controller SorterController
         Fichier csv de la BDD placé dans server/public
@@ -40,7 +42,6 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
     Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne)
 
 5 - À faire
-    Fonctionnalité par cacher par défaut chaque élément d'interface
     Checkbox en haut de Processing pour désactiver toute la colonne d'un coup (activée par défaut) "Je veux les images RAW"
     Ajouter une checkbox au dessus de jpeg compression pour désactiver totalement la compression
     Règles pour la modif d'extesnions :

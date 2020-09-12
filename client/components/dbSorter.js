@@ -127,6 +127,38 @@ class InputRange extends Component {
 
 }
 
+/*
+  Composant pour gérer individuellement chaque élément du formulaire
+*/
+class SortingCriteria extends Component {
+  constructor() {
+    super()
+    this.state = {show:false};
+    this.toggleState = this.toggleState.bind(this)
+  }
+
+  toggleState = () => {
+    this.setState({
+      show:(!this.state.show)
+    })
+  }
+
+  render() {
+    return (
+      <Fragment>
+         <div class="form-group">
+          <label title="Développer/Cacher" for={this.props.name} onClick={this.toggleState}>
+              <span class={"oi " + (this.state.show ? "oi-chevron-bottom" : "oi-chevron-right")} aria-hidden="true"></span> {this.props.label}
+          </label>
+          {this.state.show && this.props.children}
+        </div>
+        
+      </Fragment>
+    )
+  }
+
+}
+
 @connect(reducer, actions)
 class DbSorter extends Component {
 
@@ -139,6 +171,8 @@ class DbSorter extends Component {
                   
         {/* Partie Interface de recherche */}
                    <h2>iMAGES DATASET</h2>
+                   <p>To filter the dataset, edit the values of each wanted criteria. <br/>
+                   You can toggle visibility of each criteria by clicking its name.</p>
                     <form onSubmit={this.onChoiceSubmit} onReset={this.onFormReset}>
                       {/* Titres de section */}
                       <div class="row">
@@ -157,29 +191,30 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="manufacturer">
-                                Manufacturer
-                              </label>
+                            <SortingCriteria name="manufacturer" label="Manufacturer">
+                            
                               <DynamicSelect 
                                   optList={this.formSelectAllowedValues.manufacturer} 
                                   onInput={this.handleInputChange} 
                                   name="manufacturer" 
                                   value={this.state.manufacturer}/>
-                            </div>
+
+                            </SortingCriteria>
                         </div>
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <div class="form-group">
-                              <label for="demosaicing_algorithm">
-                                Demosaicing algorithm
-                              </label>
+                            <SortingCriteria name="demosaicing_algorithm" label="Demosaicing algorithm">
+
                               <DynamicSelect 
-                                  optList={this.formSelectAllowedValues.demosaicing_algorithm} 
-                                  onInput={this.handleInputChange} 
-                                  name="demosaicing_algorithm" 
-                                  value={this.state.demosaicing_algorithm}/>                      </div>
+                                    optList={this.formSelectAllowedValues.demosaicing_algorithm} 
+                                    onInput={this.handleInputChange} 
+                                    name="demosaicing_algorithm" 
+                                    value={this.state.demosaicing_algorithm}/>  
+
+                            </SortingCriteria>
+                            
+                                         
                         </div>
       
       
@@ -190,35 +225,37 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="camera_id">
-                                Camera ID
-                              </label>
+                            <SortingCriteria name="camera_id" label="Camera ID">
+
                               <DynamicSelect 
                                   optList={this.formSelectAllowedValues.camera_id} 
                                   onInput={this.handleInputChange} 
                                   name="camera_id" 
                                   value={this.state.camera_id}/>
-                            </div>
+
+                            </SortingCriteria>
+                          
                         </div>
       
                         <div class="col">
                             {/* Partie traitement */}
-                            <div className="form-group">
-                              <label htmlFor="">USM / DEN order</label>
-                            </div>
-                            <div class="form-check">
-                              <input onClick={() => this.handleCheckboxChange("usm_off")} class="form-check-input" type="checkbox" name="usm_off" id="usm_off" checked={this.state["usm_off"]}/>
-                              <label for="usm_off" class="form-check-label">
-                                USM after DEN
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input onClick={() => this.handleCheckboxChange("usm_on")} class="form-check-input" type="checkbox" name="usm_on" id="usm_on" checked={this.state["usm_on"]}/>
-                              <label for="usm_on" class="form-check-label">
-                                USM before DEN
-                              </label>
-                            </div>
+                            <SortingCriteria name="" label="USM / DEN order">
+
+                              <div class="form-check">
+                                <input onClick={() => this.handleCheckboxChange("usm_off")} class="form-check-input" type="checkbox" name="usm_off" id="usm_off" checked={this.state["usm_off"]}/>
+                                <label for="usm_off" class="form-check-label">
+                                  USM after DEN
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input onClick={() => this.handleCheckboxChange("usm_on")} class="form-check-input" type="checkbox" name="usm_on" id="usm_on" checked={this.state["usm_on"]}/>
+                                <label for="usm_on" class="form-check-label">
+                                  USM before DEN
+                                </label>
+                              </div>
+
+                            </SortingCriteria>
+                          
                         </div>
       
       
@@ -229,31 +266,29 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="year">
-                                Year
-                              </label>
+                            <SortingCriteria name="year" label="Year">
+
                               <InputRange
                                 name="year"
                                 onDrag={this.handleInputChange}
                                 values={this.state.year}
                                 max={2018} 
                                 min={2003} />
-                            </div>
+
+                            </SortingCriteria>
+                            
                         </div>
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <div class="form-group">
-                              <label for="sharpenning">
-                                 Sharpenning
-                              </label>
+                            <SortingCriteria name="sharpenning" label="Sharpenning">
                               <DynamicSelect 
                                   optList={this.formSelectAllowedValues.sharpenning} 
                                   onInput={this.handleInputChange} 
                                   name="sharpenning" 
                                   value={this.state.sharpenning}/>
-                            </div>
+                            </SortingCriteria>
+                            
                         </div>
       
                       </div>
@@ -262,31 +297,28 @@ class DbSorter extends Component {
                       <div class="form-row">
       
                         <div class="col">
+                        
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="camera_type">
-                                Camera Type
-                              </label>
+                            <SortingCriteria name="camera_type" label="Camera Type">
                               <DynamicSelect 
                                   optList={this.formSelectAllowedValues.camera_type} 
                                   onInput={this.handleInputChange} 
                                   name="camera_type" 
                                   value={this.state.camera_type}/>
-                            </div>
+                            </SortingCriteria>
+                            
                         </div>
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <div class="form-group">
-                              <label for="denoising">
-                                Denoising 
-                              </label>
+                            <SortingCriteria name="denoising" label="Denoising">
                               <DynamicSelect 
                                   optList={this.formSelectAllowedValues.denoising} 
                                   onInput={this.handleInputChange} 
                                   name="denoising" 
                                   value={this.state.denoising}/>
-                            </div>
+                            </SortingCriteria>
+                            
                         </div>
       
                       </div>
@@ -296,43 +328,39 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="fnumber">
-                                Fnumber
-                              </label>
+                            <SortingCriteria name="fnumber" label="Fnumber">
                               <InputRange 
                                 values={this.state.fnumber} 
                                 min={0} 
                                 max={40} 
                                 onDrag={this.handleInputChange}
                                 name="fnumber"/>
-                            </div>
+                            </SortingCriteria>
+                            
                         </div>
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <div class="form-group">
-                              <label for="resizing">
-                                Resizing 
-                              </label>
+                            <SortingCriteria name="resizing" label="Resizing">
                               <div className="input-group" id="resizing">
-                                  <DynamicSelect 
-                                    optList={this.formSelectAllowedValues.resizing_action} 
-                                    onInput={this.handleInputChange} 
-                                    name="resizing_action" 
-                                    value={this.state.resizing_action}/>
-                                  <DynamicSelect 
-                                    optList={this.formSelectAllowedValues.resizing_type} 
-                                    onInput={this.handleInputChange} 
-                                    name="resizing_type" 
-                                    value={this.state.resizing_type}/>
-                                  <DynamicSelect 
-                                    optList={this.formSelectAllowedValues.resizing_last_number} 
-                                    onInput={this.handleInputChange} 
-                                    name="resizing_last_number" 
-                                    value={this.state.resizing_last_number}/>
-                              </div>
-                            </div>
+                                    <DynamicSelect 
+                                      optList={this.formSelectAllowedValues.resizing_action} 
+                                      onInput={this.handleInputChange} 
+                                      name="resizing_action" 
+                                      value={this.state.resizing_action}/>
+                                    <DynamicSelect 
+                                      optList={this.formSelectAllowedValues.resizing_type} 
+                                      onInput={this.handleInputChange} 
+                                      name="resizing_type" 
+                                      value={this.state.resizing_type}/>
+                                    <DynamicSelect 
+                                      optList={this.formSelectAllowedValues.resizing_last_number} 
+                                      onInput={this.handleInputChange} 
+                                      name="resizing_last_number" 
+                                      value={this.state.resizing_last_number}/>
+                                </div>
+                            </SortingCriteria>
+                            
                         </div>
       
                       </div>
@@ -341,31 +369,25 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="iso">
-                                ISO
-                              </label>
+                            <SortingCriteria name="iso" label="ISO">
                               <InputRange 
-                                values={this.state.iso}
-                                onDrag={this.handleInputChange} 
-                                min={16} 
-                                max={51200} 
-                                name="iso"/>
-                            </div>
+                                  values={this.state.iso}
+                                  onDrag={this.handleInputChange} 
+                                  min={16} 
+                                  max={51200} 
+                                  name="iso"/>
+                            </SortingCriteria>
                         </div>
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <div class="form-group">
-                              <label for="image_size">
-                                ImageSize  
-                              </label>
+                            <SortingCriteria name="image_size" label="ImageSize">
                               <DynamicSelect 
-                                    optList={this.formSelectAllowedValues.image_size} 
-                                    onInput={this.handleInputChange} 
-                                    name="image_size" 
-                                    value={this.state.image_size}/>
-                            </div>
+                                      optList={this.formSelectAllowedValues.image_size} 
+                                      onInput={this.handleInputChange} 
+                                      name="image_size" 
+                                      value={this.state.image_size}/>
+                            </SortingCriteria>
                         </div>
       
                       </div>
@@ -374,22 +396,21 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="exposure">
-                                Exposure
-                              </label>
-                              <InputRange onDrag={this.handleInputChange} values={this.state.exposure} min={0} max={30} name="exposure"/>
-                            </div>
+                            <SortingCriteria name="exposure" label="Exposure">
+                              <InputRange 
+                                onDrag={this.handleInputChange} 
+                                values={this.state.exposure} 
+                                min={0} 
+                                max={30} 
+                                name="exposure"/>
+                            </SortingCriteria>
                         </div>
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <div class="form-group">
-                              <label for="jpeg_compression">
-                                JPEG Compression  
-                              </label>
+                            <SortingCriteria name="jpeg_compression" label="JPEG Compression">
                               <InputRange onDrag={this.handleInputChange} values={this.state.jpeg_compression} min={60} max={100} name="jpeg_compression"/>                      
-                            </div>
+                            </SortingCriteria>
                         </div>
       
                       </div>
@@ -398,12 +419,9 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="mega_pixels">
-                                MegaPixels
-                              </label>
+                            <SortingCriteria name="mega_pixels" label="MegaPixels">
                               <InputRange onDrag={this.handleInputChange} values={this.state.mega_pixels} min={0} max={60} name="mega_pixels"/>
-                            </div>
+                            </SortingCriteria>
                         </div>
                       
                         <div class="col">
@@ -416,12 +434,9 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="raw_size">
-                                RAWsize 
-                              </label>
+                            <SortingCriteria name="raw_size" label="RAWsize">
                               <InputRange onDrag={this.handleInputChange} values={this.state.raw_size} min={0} max={12000} name="raw_size"/>
-                            </div>
+                            </SortingCriteria>
                         </div>
                       
                         <div class="col">
@@ -434,12 +449,9 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="focal_length">
-                               Focal length 
-                              </label>
+                            <SortingCriteria name="focal_length" label="Focal length">
                               <InputRange onDrag={this.handleInputChange} values={this.state.focal_length} min={0} max={400} name="focal_length"/>
-                            </div>
+                            </SortingCriteria>
                         </div>
                       
                         <div class="col">
@@ -452,12 +464,9 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="focal_length_eq35">
-                              Focal length Eq. 35Mm
-                              </label>
+                            <SortingCriteria name="focal_length_eq35" label="Focal length Eq. 35Mm">
                               <InputRange onDrag={this.handleInputChange} values={this.state.focal_length_eq35} min={0} max={600} name="focal_length_eq35"/>
-                            </div>
+                            </SortingCriteria>
                         </div>
       
                         <div class="col">
@@ -470,12 +479,9 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="crop_factor">
-                                Crop Factor
-                              </label>
+                            <SortingCriteria name="crop_factor" label="Crop Factor">
                               <InputRange onDrag={this.handleInputChange} values={this.state.crop_factor} min={1} max={9} name="crop_factor"/>
-                            </div>
+                            </SortingCriteria>
                         </div>
       
                         <div class="col">
@@ -488,16 +494,13 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="sensor_size">
-                                Sensor Size
-                              </label>
+                            <SortingCriteria name="sensor_size" label="Sensor Size">
                               <DynamicSelect 
                                     optList={this.formSelectAllowedValues.sensor_size} 
                                     onInput={this.handleInputChange} 
                                     name="sensor_size" 
                                     value={this.state.sensor_size}/>
-                            </div>
+                            </SortingCriteria>
                         </div>
       
                         <div class="col">
@@ -510,12 +513,9 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="sensor_size_mm">
-                                Sensor Size (mm)
-                              </label>
+                            <SortingCriteria name="sensor_size_mm" label="Sensor Size (mm)">
                               <InputRange onDrag={this.handleInputChange} values={this.state.sensor_size_mm} name="sensor_size_mm" step={0.1} min={5} max={43.2}/>
-                            </div>
+                            </SortingCriteria>
                         </div>
       
                         <div class="col"> </div>
@@ -526,12 +526,9 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="pixel_pitch">
-                                Pixel Pitch (µm)
-                              </label>
+                            <SortingCriteria name="pixel_pitch" label="Pixel Pitch (µm)">
                               <InputRange onDrag={this.handleInputChange} values={this.state.pixel_pitch} name="pixel_pitch" min={1} max={10}/>
-                            </div>
+                            </SortingCriteria>
                         </div>
       
                         <div class="col"> </div>
@@ -542,12 +539,9 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="pixel_density">
-                                Pixel Density (MP/cm2)
-                              </label>
+                            <SortingCriteria name="pixel_density" label="Pixel Density (MP/cm2)">
                               <InputRange onDrag={this.handleInputChange} values={this.state.pixel_density} name="pixel_density" min={1} max={100}/>
-                            </div>
+                            </SortingCriteria>
                         </div>
       
                         <div class="col"> </div>
@@ -558,23 +552,20 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie acquisition */}
-                            <div class="form-group">
-                              <label for="sensor_model">
-                                Sensor Model
-                              </label>
+                            <SortingCriteria name="sensor_model" label="Sensor Model">
                               <DynamicSelect 
                                     optList={this.formSelectAllowedValues.sensor_model} 
                                     onInput={this.handleInputChange} 
                                     name="sensor_model" 
                                     value={this.state.sensor_model}/>
-                            </div>
+                            </SortingCriteria>
                         </div>
       
                         <div class="col"> </div>
       
                       </div>
 
-                        <button type="submit" className="btn btn-default btn-lg">Trier</button>
+                        <button type="submit" className="btn btn-default btn-lg">FILTER</button>
 
                         <button type="reset" className="ml-4 btn btn-default btn-lg">Reset</button>
 
@@ -591,7 +582,7 @@ class DbSorter extends Component {
                                 <p>{img_name}</p>
                                 )
                               })
-                            : "Aucun résultat"
+                            : "No results"
                             }
                           </div>
                         </div>
@@ -916,7 +907,7 @@ class DbSorter extends Component {
 
     //si ya pas de paramètres, on a pas à trier
     if(!url_params) {
-      alert('Aucun tri à faire')
+      alert('No filtering critera selected')
       return
     }
 
