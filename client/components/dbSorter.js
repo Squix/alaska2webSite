@@ -242,13 +242,13 @@ class DbSorter extends Component {
                             <SortingCriteria name="" label="USM / DEN order">
 
                               <div class="form-check">
-                                <input onClick={() => this.handleCheckboxChange("usm_off")} class="form-check-input" type="checkbox" name="usm_off" id="usm_off" checked={this.state["usm_off"]}/>
+                                <input onClick={() => this.handleCheckboxChange("usm_off", ['usm_on'])} class="form-check-input" type="checkbox" name="usm_off" id="usm_off" checked={this.state["usm_off"] ? true : false }/>
                                 <label for="usm_off" class="form-check-label">
                                   USM after DEN
                                 </label>
                               </div>
                               <div class="form-check">
-                                <input onClick={() => this.handleCheckboxChange("usm_on")} class="form-check-input" type="checkbox" name="usm_on" id="usm_on" checked={this.state["usm_on"]}/>
+                                <input onClick={() => this.handleCheckboxChange("usm_on",['usm_off'])} class="form-check-input" type="checkbox" name="usm_on" id="usm_on" checked={this.state["usm_on"]? true : false }/>
                                 <label for="usm_on" class="form-check-label">
                                   USM before DEN
                                 </label>
@@ -873,9 +873,14 @@ class DbSorter extends Component {
 
       //gestion des checkboxes
       if(typeof this.state[criteria] === "boolean") {
-      
-        //ajout à la l'url
-        url_params += criteria+"=true"+"&"
+        console.log("criteria name", criteria)
+        console.log('critieria value', this.state[criteria])
+        //on vérifie que la checkbox est cochée tout de de même
+        
+          //ajout à la l'url
+          url_params += criteria+"="+this.state[criteria]+"&"
+        
+       
       }
       //gestion des InputRange et DynamicSelect
       else if(typeof this.state[criteria] === "object") {
@@ -952,7 +957,7 @@ class DbSorter extends Component {
     }
   }
 
-  handleCheckboxChange(control_name) {
+  handleCheckboxChange(control_name, linked_controls) {
     let newVal = !this.state[control_name]
     this.setState({ [control_name]: newVal })
 
@@ -961,6 +966,13 @@ class DbSorter extends Component {
     if(!this.state.sortingCriteria.includes(control_name)) {
       //on l'ajoute
       this.state.sortingCriteria.push(control_name)
+    }
+    //et de même pour les checkboxes reliées
+    for (const control of linked_controls) {
+      if(!this.state.sortingCriteria.includes(control)) {
+        //on l'ajoute
+        this.state.sortingCriteria.push(control)
+      }
     }
 
   }

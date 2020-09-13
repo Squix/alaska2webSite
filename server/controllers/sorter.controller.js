@@ -60,13 +60,15 @@ class SorterController {
         if(req.query["usm_on"] || req.query["usm_off"]) {
            
             let usm_array = []
-            if(req.query["usm_on"]) {
+            console.log("usm_on", req.query["usm_on"])
+            console.log("usm_off", req.query["usm_off"])
+            if(typeof req.query["usm_on"] !== "undefined" && (req.query["usm_on"] == 'true') ) {
                 usm_array.push("1")
             }
-            if(req.query["usm_off"]) {
+            if(typeof req.query["usm_off"] !== "undefined" && (req.query["usm_off"] == 'true') ) {
                 usm_array.push("0")
             }
-
+            console.log("usm_array",usm_array)
             criteriaObject["21-USM / DEN order"] = {
                 supplied_value:usm_array.join(',')
             }
