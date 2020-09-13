@@ -2,7 +2,7 @@
     Composant présentant une interface permettant de faire le tri dans la db
 */
 
-import { Component, Fragment } from "preact";
+import { Component, Fragment, toChildArray, cloneElement } from "preact";
 import { connect } from "react-redux";
 import reducer from "../reducer";
 import * as actions from "../actions";
@@ -50,7 +50,8 @@ class DynamicSelect extends Component {
         <Select 
           onChange={this.handleChange} 
           value={this.props.value} 
-          isMulti 
+          isMulti
+          isDisabled={this.props.disabled} 
           options={this.toUsableSelectValue(this.props.optList)} />
       </Fragment>
         
@@ -90,6 +91,7 @@ class InputRange extends Component {
           values={this.props.values}
           snap={true}
           onValuesUpdated={this.handleRangeChange}
+          disabled={this.props.disabled}
         />
         <br/>
         <p>{this.props.values[0]} - {this.props.values[1]}</p>
@@ -142,15 +144,20 @@ class SortingCriteria extends Component {
       show:(!this.state.show)
     })
   }
-
+  
   render() {
+    const editedChildren = toChildArray(this.props.children).map((child) => {
+      return cloneElement(child, {
+        disabled:(typeof this.props.disabled !== "undefined") ? this.props.disabled : false
+      });
+    })
     return (
       <Fragment>
          <div class="form-group">
-          <label title="Développer/Cacher" for={this.props.name} onClick={this.toggleState}>
+          <label class={(this.props.disabled ? "text-muted" : null)} title="Développer/Cacher" for={this.props.name} onClick={this.toggleState}>
               <span class={"oi " + (this.state.show ? "oi-chevron-bottom" : "oi-chevron-right")} aria-hidden="true"></span> {this.props.label}
           </label>
-          {this.state.show && this.props.children}
+          {this.state.show && editedChildren}
         </div>
         
       </Fragment>
@@ -186,6 +193,26 @@ class DbSorter extends Component {
                         </div>
                       </div>
 
+                      <div className="form-row">
+                        <div className="col">
+
+                        </div>
+                        <div className="col">
+                          <div class="form-check">
+                                  <input 
+                                      onClick={() => this.handleCheckboxChange("only_raw")} 
+                                      class="form-check-input" 
+                                      type="checkbox" 
+                                      name="only_raw" 
+                                      id="only_raw" 
+                                      checked={this.state["only_raw"] ? true : false }/>
+                                  <label for="only_raw" class="form-check-label">
+                                    Je veux les images RAW
+                                  </label>
+                          </div>
+                        </div>
+                      </div>
+
                       {/* Ligne 1 */}
                       <div class="form-row">
       
@@ -204,7 +231,7 @@ class DbSorter extends Component {
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <SortingCriteria name="demosaicing_algorithm" label="Demosaicing algorithm">
+                            <SortingCriteria name="demosaicing_algorithm" label="Demosaicing algorithm" disabled={this.state.only_raw}>
 
                               <DynamicSelect 
                                     optList={this.formSelectAllowedValues.demosaicing_algorithm} 
@@ -239,16 +266,16 @@ class DbSorter extends Component {
       
                         <div class="col">
                             {/* Partie traitement */}
-                            <SortingCriteria name="" label="USM / DEN order">
+                            <SortingCriteria name="" label="USM / DEN order" disabled={this.state.only_raw}>
 
                               <div class="form-check">
-                                <input onClick={() => this.handleCheckboxChange("usm_off", ['usm_on'])} class="form-check-input" type="checkbox" name="usm_off" id="usm_off" checked={this.state["usm_off"] ? true : false }/>
+                                <input disabled={this.state.only_raw} onClick={() => this.handleCheckboxChange("usm_off", ['usm_on'])} class="form-check-input" type="checkbox" name="usm_off" id="usm_off" checked={this.state["usm_off"] ? true : false }/>
                                 <label for="usm_off" class="form-check-label">
                                   USM after DEN
                                 </label>
                               </div>
                               <div class="form-check">
-                                <input onClick={() => this.handleCheckboxChange("usm_on",['usm_off'])} class="form-check-input" type="checkbox" name="usm_on" id="usm_on" checked={this.state["usm_on"]? true : false }/>
+                                <input disabled={this.state.only_raw} onClick={() => this.handleCheckboxChange("usm_on",['usm_off'])} class="form-check-input" type="checkbox" name="usm_on" id="usm_on" checked={this.state["usm_on"]? true : false }/>
                                 <label for="usm_on" class="form-check-label">
                                   USM before DEN
                                 </label>
@@ -281,7 +308,7 @@ class DbSorter extends Component {
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <SortingCriteria name="sharpenning" label="Sharpenning">
+                            <SortingCriteria name="sharpenning" label="Sharpenning" disabled={this.state.only_raw}>
                               <DynamicSelect 
                                   optList={this.formSelectAllowedValues.sharpenning} 
                                   onInput={this.handleInputChange} 
@@ -311,7 +338,7 @@ class DbSorter extends Component {
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <SortingCriteria name="denoising" label="Denoising">
+                            <SortingCriteria name="denoising" label="Denoising" disabled={this.state.only_raw}>
                               <DynamicSelect 
                                   optList={this.formSelectAllowedValues.denoising} 
                                   onInput={this.handleInputChange} 
@@ -341,23 +368,26 @@ class DbSorter extends Component {
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <SortingCriteria name="resizing" label="Resizing">
+                            <SortingCriteria name="resizing" label="Resizing" disabled={this.state.only_raw}>
                               <div className="input-group" id="resizing">
                                     <DynamicSelect 
                                       optList={this.formSelectAllowedValues.resizing_action} 
                                       onInput={this.handleInputChange} 
                                       name="resizing_action" 
-                                      value={this.state.resizing_action}/>
+                                      value={this.state.resizing_action} 
+                                      disabled={this.state.only_raw} />
                                     <DynamicSelect 
                                       optList={this.formSelectAllowedValues.resizing_type} 
                                       onInput={this.handleInputChange} 
                                       name="resizing_type" 
-                                      value={this.state.resizing_type}/>
+                                      value={this.state.resizing_type} 
+                                      disabled={this.state.only_raw}/>
                                     <DynamicSelect 
                                       optList={this.formSelectAllowedValues.resizing_last_number} 
                                       onInput={this.handleInputChange} 
                                       name="resizing_last_number" 
-                                      value={this.state.resizing_last_number}/>
+                                      value={this.state.resizing_last_number}
+                                      disabled={this.state.only_raw}/>
                                 </div>
                             </SortingCriteria>
                             
@@ -381,7 +411,7 @@ class DbSorter extends Component {
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <SortingCriteria name="image_size" label="ImageSize">
+                            <SortingCriteria name="image_size" label="ImageSize" disabled={this.state.only_raw}>
                               <DynamicSelect 
                                       optList={this.formSelectAllowedValues.image_size} 
                                       onInput={this.handleInputChange} 
@@ -391,6 +421,28 @@ class DbSorter extends Component {
                         </div>
       
                       </div>
+
+                      <div className="form-row">
+                        <div className="col">
+
+                        </div>
+                        <div className="col">
+                          <div class="form-check">
+                                  <input 
+                                      onClick={() => this.handleCheckboxChange("no_compression")} 
+                                      disabled={this.state.only_raw}
+                                      class="form-check-input" 
+                                      type="checkbox" 
+                                      name="no_compression" 
+                                      id="no_compression" 
+                                      checked={this.state["no_compression"] ? true : false }/>
+                                  <label for="no_compression" class="form-check-label">
+                                    Pas de compression
+                                  </label>
+                          </div>
+                        </div>
+                      </div>
+
                       {/* Ligne 7 */}
                       <div class="form-row">
       
@@ -408,7 +460,7 @@ class DbSorter extends Component {
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <SortingCriteria name="jpeg_compression" label="JPEG Compression">
+                            <SortingCriteria name="jpeg_compression" label="JPEG Compression" disabled={this.state.only_raw || this.state.no_compression}>
                               <InputRange onDrag={this.handleInputChange} values={this.state.jpeg_compression} min={60} max={100} name="jpeg_compression"/>                      
                             </SortingCriteria>
                         </div>
@@ -797,10 +849,28 @@ class DbSorter extends Component {
 
   }
 
+  //Liste des valeurs initiales pour les checkboxes
   formChoiceAllowedValues = {
     "usm_off":true,
-    "usm_on":true
+    "usm_on":true,
+    "only_raw":true,
+    "no_compression":false
   }
+
+  //liste des cirtères appartenant à l'image processing
+  formProcessingCriteria = [
+    "demosaicing_algorithm",
+    "usm_on",
+    "usm_off",
+    "sharpenning",
+    "denoising",
+    "resizing_action",
+    "resizing_type",
+    "resizing_last_number",
+    "image_size",
+    "no_compression",
+    "jpeg_compression"
+  ]
 
   //fonction utilitaire pour convertir les valeurs en un objet utilisable par react-select
   toUsableSelectValue(rawOptList) {
@@ -871,10 +941,14 @@ class DbSorter extends Component {
     let transformed_criteria_value = ""
     for (const criteria of this.state.sortingCriteria) {
 
+      //si le control appartient au processing, on check que le only_raw n'est pas coché ! Sinon on ignore
+      if( (this.formProcessingCriteria.includes(criteria) && this.state.only_raw) || (criteria === "jpeg_compression" && this.state.no_compression) ) {
+        console.log("ignoring " + criteria)
+        continue
+      }
+
       //gestion des checkboxes
       if(typeof this.state[criteria] === "boolean") {
-        console.log("criteria name", criteria)
-        console.log('critieria value', this.state[criteria])
         //on vérifie que la checkbox est cochée tout de de même
         
           //ajout à la l'url
@@ -957,7 +1031,7 @@ class DbSorter extends Component {
     }
   }
 
-  handleCheckboxChange(control_name, linked_controls) {
+  handleCheckboxChange(control_name, linked_controls=[]) {
     let newVal = !this.state[control_name]
     this.setState({ [control_name]: newVal })
 
