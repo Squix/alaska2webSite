@@ -115,7 +115,14 @@ class SorterController {
         console.log(records.length)
 
         records = records.map(function(record) {
-            return record["1-Name"];
+            let name = record["1-Name"];
+            if(req.query.ext === 'jpg') {
+                name = name.split('.')[0] + '.JPG'
+            }
+            else if(req.query.ext === 'ppm') {
+                name = name.split('.')[0] + '.PPM'
+            }
+            return name;
           })
   
         res.status(200).json(records)

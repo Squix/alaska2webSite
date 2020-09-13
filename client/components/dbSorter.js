@@ -429,15 +429,14 @@ class DbSorter extends Component {
                         <div className="col">
                           <div class="form-check">
                                   <input 
-                                      onClick={() => this.handleCheckboxChange("no_compression")} 
-                                      disabled={this.state.only_raw}
+                                      onClick={() => this.handleCheckboxChange("compression")} 
                                       class="form-check-input" 
                                       type="checkbox" 
-                                      name="no_compression" 
-                                      id="no_compression" 
-                                      checked={this.state["no_compression"] ? true : false }/>
-                                  <label for="no_compression" class="form-check-label">
-                                    Pas de compression
+                                      name="compression" 
+                                      id="compression" 
+                                      checked={this.state["compression"] ? true : false }/>
+                                  <label for="compression" class="form-check-label">
+                                   Compression
                                   </label>
                           </div>
                         </div>
@@ -460,7 +459,7 @@ class DbSorter extends Component {
                       
                         <div class="col">
                             {/* Partie traitement */}
-                            <SortingCriteria name="jpeg_compression" label="JPEG Compression" disabled={this.state.only_raw || this.state.no_compression}>
+                            <SortingCriteria name="jpeg_compression" label="JPEG Compression" disabled={!this.state.compression}>
                               <InputRange onDrag={this.handleInputChange} values={this.state.jpeg_compression} min={60} max={100} name="jpeg_compression"/>                      
                             </SortingCriteria>
                         </div>
@@ -854,7 +853,7 @@ class DbSorter extends Component {
     "usm_off":true,
     "usm_on":true,
     "only_raw":true,
-    "no_compression":false
+    "compression":false
   }
 
   //liste des cirtères appartenant à l'image processing
@@ -867,9 +866,12 @@ class DbSorter extends Component {
     "resizing_action",
     "resizing_type",
     "resizing_last_number",
-    "image_size",
-    "no_compression",
-    "jpeg_compression"
+    "image_size"
+  ]
+
+  formSpecialCriteria = [
+    "only_raw",
+    "compression"
   ]
 
   //fonction utilitaire pour convertir les valeurs en un objet utilisable par react-select
@@ -942,8 +944,14 @@ class DbSorter extends Component {
     for (const criteria of this.state.sortingCriteria) {
 
       //si le control appartient au processing, on check que le only_raw n'est pas coché ! Sinon on ignore
-      if( (this.formProcessingCriteria.includes(criteria) && this.state.only_raw) || (criteria === "jpeg_compression" && this.state.no_compression) ) {
+      if( (this.formProcessingCriteria.includes(criteria) && this.state.only_raw) || (criteria === "jpeg_compression" && this.state.compression) ) {
         console.log("ignoring " + criteria)
+        continue
+      }
+
+      //on ignore les checkboxes de personnalisation du formulaire/extension
+      if(this.formSpecialCriteria.includes(criteria)) {
+        console.log("ignoring special criteria: " + criteria)
         continue
       }
 
@@ -988,6 +996,15 @@ class DbSorter extends Component {
     if(!url_params) {
       alert('No filtering critera selected')
       return
+    }
+
+    //on ajoute une précision sur les extensions
+    if(this.state.only_raw & this.state.compression) {
+      //ça sera du jpeg
+      url_params += "&ext="+"jpg"
+    } else if(!this.state.only_raw && !this.state.compression) {
+      //ça sera du ppm
+      url_params += "&ext="+"ppm"
     }
 
     fetch('/dataset_sorter?'+url_params).then(response => {
