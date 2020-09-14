@@ -42,7 +42,6 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
         Modification du script npm client-dev pour utiliser watch et preact build (on n'a pas besoin du serv intégré de preact watch)
 
 4 - PROBLÈMES RECONTRÉS
-    Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne)
+    Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne) ==> SOLUTION: suppression de ScrollableAnchor, on reste sur un système classique de liens
 
 5 - À faire
-    Réparer le système de liens
