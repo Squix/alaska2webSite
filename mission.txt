@@ -31,11 +31,13 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
         Système de reset du formulaire
         Fonctionnalité par cacher par défaut chaque élément d'interface, et changer leur visibilité en un clic
         Fonctionnalité pour désactiver totalement le traitement des images, également présente pour la compression
+        Système qui définit automatiquement l'extension en fonction des paramètres sélectionnés (raw/compression)
     Création d'un endpoint du serveur pour trier le fichier csv de la BDD
         Controller SorterController
         Fichier csv de la BDD placé dans server/public
         Package node-csv-query installé pour la communication avec ce fichier
         Création d'un script pour convertir la BDD csv en fichier utilisable par node-csv-query
+        Ajout d'un système pour modifier à la volée l'extension des fichiers renvoyés
     Ajout d'un système approprié pour dev sereinement sur le serveur et le client
         Modification du script npm client-dev pour utiliser watch et preact build (on n'a pas besoin du serv intégré de preact watch)
 
@@ -43,7 +45,4 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
     Après la mise à jour des différentes dépendances, ScrollableAnchor ne fonctionne plus (erreur interne)
 
 5 - À faire
-    Règles pour la modif d'extesnions :
-        Si on choisis le RAW sans compression, on garde ce qu'il y a dans le CSV
-        Si pas RAW et pas de compression, c'est .ppm
-        Si raw et compression, .jpg
+    Réparer le système de liens
