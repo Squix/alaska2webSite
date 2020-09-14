@@ -691,15 +691,21 @@ class DbSorter extends Component {
             </form>
 
             {this.state.showResults ? (
-              <div class="card mt-4 h-25  bg-primary" id="resultBox">
+              <div class="card mt-4 bg-primary overflow-auto" style={{height:"300px",overflowY:"scroll"}} id="resultBox">
                 <div className="card-body">
-                  <pre>
-                    {this.state.sortResults.length
-                      ? this.state.sortResults.map(function (img_name) {
-                          return {img_name};
-                        })
+                {this.state.sortResults.length
+                      ?
+                        <Fragment>
+                          <p>{this.state.sortResults.length} results</p>
+                          <pre class="text-white">
+                            {this.state.sortResults.map(function (img_name) {
+                                  return <Fragment>{img_name}<br/></Fragment>
+                                })
+                              }
+                          </pre>
+                        </Fragment>
+                        
                       : "No results"}
-                  </pre>
                   
                 </div>
               </div>
