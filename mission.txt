@@ -10,7 +10,7 @@ Je pense qu'elles peuvent être utiles pour comprendre le fonctionnement du site
 
 2 - ARCHITECTURE EXISTANTE
     Le site est composé d'un backend expressJS, et d'un frontend ReactJS, qui sont lancés en même temps sur le serveur (npm start)
-    ReactJS semble complémenté/supplanté par PreactJS
+    ReactJS est supplanté par PreactJS
     On peut lancer uniquement le frontend en mode dev pour le modifier sereinement avec "npm run client-dev"
         Attention, avant cela le serveur doit aussi être lancé pour éviter une erreur SSL (npm run server)
     Lorsqu'on lance le serveur, il faut impérativement utiliser le port 8443 (sinon erreur SSL)
