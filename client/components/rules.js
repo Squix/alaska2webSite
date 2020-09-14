@@ -1,5 +1,5 @@
 import { h, Component } from 'preact'
-import ScrollableAnchor from 'react-scrollable-anchor'
+
 import List from './list'
 
 class Rules extends Component {
@@ -25,8 +25,7 @@ class Rules extends Component {
     }
 
     return (
-      <ScrollableAnchor id="rules">
-        <section class="content-section text-center">
+        <section id="rules" class="content-section text-center">
           <div class="container">
             <div class="row">
               <div class="col-lg-10 margin-auto">
@@ -40,7 +39,6 @@ class Rules extends Component {
             </div>
           </div>
         </section>
-      </ScrollableAnchor>
     )
   }
 }

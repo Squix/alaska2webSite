@@ -45,7 +45,6 @@
     "preact-cli-plugin-fast-async": "^1.0.1",
     "react": "^*",
     "react-redux": "^7.2.1",
-    "react-scrollable-anchor": "^*",
     "react-select": "^3.1.0",
     "redux": "^*",
     "redux-thunk": "^*",

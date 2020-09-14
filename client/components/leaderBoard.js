@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 import reducer from '../reducer'
 import * as actions from '../actions'
-import ScrollableAnchor from 'react-scrollable-anchor'
+
 import LeaderBoardTable from './leaderBoardTable'
 import LeaderBoardTabs from './leaderBoardTabs'
 
@@ -17,8 +17,7 @@ class LeaderBoard extends Component {
   }
   render({activeTab, submissions1, submissions2, submissions3}, {}) {
     return (
-      <ScrollableAnchor id="leaderboard">
-        <section class="content-section text-center">
+        <section id="leaderboard" class="content-section text-center">
           <div class="container">
             <div class="row">
               <div class="col-lg-10 margin-auto">
@@ -37,7 +36,6 @@ class LeaderBoard extends Component {
             <LeaderBoardTable submissions={activeTab === 1 ? submissions1 : activeTab === 2 ? submissions2 : submissions3} />
           </div>
         </section>
-      </ScrollableAnchor>
     )
   }
 }

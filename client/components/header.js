@@ -1,11 +1,9 @@
-import { h, Component } from 'preact'
-import ScrollableAnchor from 'react-scrollable-anchor'
+import { Component } from 'preact'
 
 class Header extends Component {
   render() {
     return (
-      <header class="masthead">
-        <ScrollableAnchor id="top">
+      <header class="masthead" id="top">
           <div class="intro-body">
             <div class="container">
               <div class="row">
@@ -24,7 +22,6 @@ class Header extends Component {
               </div>
             </div>
           </div>
-        </ScrollableAnchor>
       </header>
     )
   }

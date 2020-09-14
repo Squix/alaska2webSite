@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 import reducer from '../reducer'
 import * as actions from '../actions'
-import ScrollableAnchor from 'react-scrollable-anchor'
+
 import List from './list'
 
 @connect(reducer, actions)
@@ -36,8 +36,7 @@ class Material extends Component {
     }
 
     return (
-      <ScrollableAnchor id="material">
-        <section class="download-section content-section text-center">
+        <section id="material" class="download-section content-section text-center">
           <div class="container">
             <div class="col-lg-10 margin-auto">
               <h2 class="text-center">Material</h2>
@@ -162,7 +161,6 @@ class Material extends Component {
             </div>
           </div>
         </section>
-      </ScrollableAnchor>
     )
   }
 }

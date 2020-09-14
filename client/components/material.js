@@ -1,17 +1,11 @@
-import { h, Component, Fragment } from "preact";
+import { Component, Fragment } from "preact";
 import { connect } from "react-redux";
 import reducer from "../reducer";
 import * as actions from "../actions";
-import ScrollableAnchor from "react-scrollable-anchor";
 import List from "./list";
-import { format } from "morgan";
-
-
 
 @connect(reducer, actions)
 class Material extends Component {
-
-  
 
   render() {
     const list = {
@@ -77,7 +71,7 @@ class Material extends Component {
     return (
       <Fragment>
         
-        <section class="download-section content-section text-center">
+        <section id="material" class="download-section content-section text-center">
           <div class="container">
             <div class="col-lg-10 margin-auto">
              

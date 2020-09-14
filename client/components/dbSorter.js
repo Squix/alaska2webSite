@@ -693,11 +693,14 @@ class DbSorter extends Component {
             {this.state.showResults ? (
               <div class="card mt-4 h-25  bg-primary" id="resultBox">
                 <div className="card-body">
-                  {this.state.sortResults.length
-                    ? this.state.sortResults.map(function (img_name) {
-                        return <p>{img_name}</p>;
-                      })
-                    : "No results"}
+                  <pre>
+                    {this.state.sortResults.length
+                      ? this.state.sortResults.map(function (img_name) {
+                          return {img_name};
+                        })
+                      : "No results"}
+                  </pre>
+                  
                 </div>
               </div>
             ) : null}

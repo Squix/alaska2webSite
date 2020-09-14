@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 import reducer from '../reducer'
 import * as actions from '../actions'
-import ScrollableAnchor from 'react-scrollable-anchor'
+
 import List from './list'
 import LastSubmission from './lastSubmission'
 
@@ -40,8 +40,7 @@ class Submit extends Component {
       ]
     }
     return (
-      <ScrollableAnchor id="submit">
-        <section class="submit-section content-section text-center">
+        <section id="submit" class="submit-section content-section text-center">
           <div class="container">
             <div class="row">
               <div class="col-lg-10 margin-auto">
@@ -73,7 +72,6 @@ class Submit extends Component {
             </div>
           </div>
         </section>
-      </ScrollableAnchor>
     )
   }
 }

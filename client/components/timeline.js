@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 import reducer from '../reducer'
 import * as actions from '../actions'
-import ScrollableAnchor from 'react-scrollable-anchor'
+
 
 @connect(reducer, actions)
 class Timeline extends Component {
@@ -11,8 +11,7 @@ class Timeline extends Component {
   }
   render({ stages }, {}) {
     return (
-      <ScrollableAnchor id="timeline">
-        <section class="content-section text-center">
+        <section id="timeline" class="content-section text-center">
           <div class="container">
             <div class="row">
               <div class="col-lg-10 margin-auto">
@@ -49,7 +48,6 @@ class Timeline extends Component {
             </div>
           </div>
         </section>
-      </ScrollableAnchor>
     )
   }
 }

@@ -1,5 +1,4 @@
-import { h, Component } from 'preact'
-import ScrollableAnchor from 'react-scrollable-anchor'
+import { Component } from 'preact'
 import List from './list'
 
 class Acknowledgements extends Component {
@@ -53,8 +52,7 @@ class Acknowledgements extends Component {
     }
 
     return (
-      <ScrollableAnchor id="acknowledgements">
-        <section class="ack-section content-section text-center">
+        <section id="acknowledgements" class="ack-section content-section text-center">
           <div class="container">
             <div class="row">
               <div class="col-lg-10 margin-auto">
@@ -70,7 +68,6 @@ class Acknowledgements extends Component {
             </div>
           </div>
         </section>
-      </ScrollableAnchor>
     )
   }
 }

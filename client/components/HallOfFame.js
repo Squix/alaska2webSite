@@ -1,11 +1,10 @@
 import { h, Component } from 'preact'
-import ScrollableAnchor from 'react-scrollable-anchor'
+
 
 class HallOfFame extends Component {
   render() {
     return (
-      <ScrollableAnchor id="HallOfFame">
-        <section class="content-section content-section--no-padding-bottom">
+        <section id="HallOfFame" class="content-section content-section--no-padding-bottom">
           <div class="container">
             <div class="row">
               <div class="col-lg-10 margin-auto">
@@ -63,7 +62,6 @@ class HallOfFame extends Component {
             </div>
           </div>
         </section>
-      </ScrollableAnchor>
     )
   }
 }
