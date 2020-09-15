@@ -41,6 +41,11 @@ class DynamicSelect extends Component {
   }
 
   render() {
+    const colourStyles = {
+      option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+        return { ...styles, color: '#308cff' };
+      }
+    }
     return (
       <Fragment>
         <br />
@@ -51,6 +56,7 @@ class DynamicSelect extends Component {
           isMulti
           isDisabled={this.props.disabled}
           options={this.toUsableSelectValue(this.props.optList)}
+          styles={colourStyles}
         />
       </Fragment>
 
@@ -690,7 +696,7 @@ class DbSorter extends Component {
               </button>
             </form>
 
-            <span class="mt-2">{this.state.loadingText}</span>
+            <br/><span class="">{this.state.loadingText}</span>
 
             {this.state.showResults ? (
               <div class="card mt-4 bg-primary overflow-auto" style={{height:"300px",overflowY:"scroll"}} id="resultBox">
