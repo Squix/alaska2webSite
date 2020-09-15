@@ -690,6 +690,8 @@ class DbSorter extends Component {
               </button>
             </form>
 
+            <span class="mt-2">{this.state.loadingText}</span>
+
             {this.state.showResults ? (
               <div class="card mt-4 bg-primary overflow-auto" style={{height:"300px",overflowY:"scroll"}} id="resultBox">
                 <div className="card-body">
@@ -966,6 +968,8 @@ class DbSorter extends Component {
     this.state.showResults = false;
     //on init à aucun résultats au début
     this.state.sortResults = {};
+    //init du text de chargement
+    this.loadingText = "";
     // on préserve le state initial pour reset
     this.baseState = this.state;
   }
@@ -988,6 +992,7 @@ class DbSorter extends Component {
   async onChoiceSubmit(e) {
     e.preventDefault();
     //pour tous les éléments qui ont été modifiés, on les ajoute à l'url du filtre serveur
+    this.setState({loadingText:"Filtering 80K rows..."})
     console.log(this.state.sortingCriteria);
     let url_params = "";
     let transformed_criteria_value = "";
@@ -1064,6 +1069,7 @@ class DbSorter extends Component {
               sortResults: json,
             });
             console.log(json);
+            this.setState({loadingText:""})
           })
         : console.log(response);
     });
