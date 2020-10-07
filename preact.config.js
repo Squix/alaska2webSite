@@ -1,4 +1,4 @@
-import asyncPlugin from 'preact-cli-plugin-fast-async';
+
 
 export default (config, env, helpers) => {
     console.log('Custom config Webpack - Compatibilité React')
@@ -7,6 +7,14 @@ export default (config, env, helpers) => {
     config.resolve.alias["react-dom/test-utils"] = "preact/test-utils"
     config.resolve.alias["react-dom"] = "preact/compat"
 
-    asyncPlugin(config);
+    //Activation de async au niveau global
+    console.log('Custom config Webpack - Compatibilité Async')
+    let babel = config.module.loaders.filter(loader => loader.loader === 'babel-loader')[0].options;
+
+	// Blacklist regenerator within env preset:
+	babel.presets[0][1].exclude.push('transform-async-to-generator');
+
+	// Add fast-async
+	babel.plugins.push([require.resolve('fast-async'), { spec: true }]);
 
 }

@@ -42,7 +42,6 @@
     "node-csv-query": "^0.1.0",
     "nodemailer": "^*",
     "preact": "^10.4.6",
-    "preact-cli-plugin-fast-async": "^1.0.1",
     "react": "^*",
     "react-redux": "^7.2.1",
     "react-select": "^3.1.0",
